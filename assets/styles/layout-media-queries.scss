@@ -1,0 +1,13 @@
+$media_queries: (
+  'max-portrait': "(max-aspect-ratio: 3000/4001)",
+  'min-square': "(min-aspect-ratio: 3/4)",
+  'max-square': "(max-aspect-ratio: 4000/3001)",
+  'min-landscape': "(min-aspect-ratio: 4/3)",
+  'not-square': "(min-aspect-ratio: 4/3), (max-aspect-ratio: 3000/4001)",
+);
+
+@mixin bp($breakpoint) {
+    @media #{map-get($media_queries, $breakpoint)} {
+        @content;
+    }
+}
