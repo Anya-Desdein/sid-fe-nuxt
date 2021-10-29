@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <Header></Header>
-    <div class="container"> 
+<div>
+    <PageHeading></PageHeading>
+    <div class="container page-container tos-page"> 
       <h2>This is terms of service</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt turpis purus, vitae accumsan velit lobortis sit amet. Pellentesque faucibus eleifend lectus, eget ultrices nisl sagittis sit amet. Sed vulputate malesuada scelerisque. Duis eu laoreet nulla. Proin diam dolor, maximus et dictum at, lobortis a mi. Mauris blandit cursus est, volutpat laoreet tellus ultricies ut. Proin auctor eu lorem et scelerisque. Phasellus eleifend interdum dui, sed convallis felis tincidunt sit amet.
       </p>
@@ -20,20 +20,18 @@
       <p>Etiam pulvinar tincidunt sapien nec maximus. Sed aliquam maximus eros, a dictum odio congue sed. Aenean et porttitor sapien. Nam eu quam et nibh porttitor porta suscipit at mi. Morbi sit amet semper nisi, sit amet congue magna. In hac habitasse platea dictumst. Nam non pulvinar arcu. Nam dolor nunc, sagittis nec mi sed, porttitor egestas urna. Sed faucibus leo id ornare varius. Morbi pellentesque vel elit eget varius. Nunc vestibulum vulputate diam, quis aliquet est dignissim at. Aenean a scelerisque elit, eleifend convallis neque. Donec ullamcorper libero quis consectetur lobortis. Quisque nibh odio, dictum varius commodo vitae, scelerisque sit amet justo. Ut tempus, nibh id pretium faucibus, arcu turpis eleifend mi, in vulputate leo elit non eros.
       </p>
     </div>
-    <Footer></Footer>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-    };
-  },
-  methods: {
+<style lang="scss" scoped>
+.tos-page {
+  
+  h2, h3 {
+    margin-bottom: 0.8em;
+    margin-top: 0.8em;
+  }
+  p {
+    margin-bottom: 0.8em;
   }
 }
-</script>
-
-<style>
 </style>

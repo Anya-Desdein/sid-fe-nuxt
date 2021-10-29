@@ -1,10 +1,43 @@
-<template>
-  <div>
+<template> 
+  <div class="layout-root">
+    <Header></Header>
     <Nuxt />
+    <Footer></Footer>
+    <div class="bg-img">
+      <div class="container">
+        <img src="~assets/img/rendering_v3)glow_alphabg.png" alt="background image">
+      </div>
+    </div>
   </div>
 </template>
 
-<style>
+<style lang="scss" scoped>
+
+
+.bg-img {
+  position: fixed;
+  z-index: -100;
+  top:4rem;
+  left:0;
+  right:0;
+    // ;
+
+  .container {
+    position: relative;
+  }
+
+  img {
+    display: block;
+    position: absolute;
+    transform: translateX(50%);
+    right: 100% * 0.2 * 1.5;
+    height: 30rem;
+    opacity: 0.8;
+  }
+}
+</style>
+
+<style lang="scss">
 
 @font-face {
   font-family: 'MingLiU_PLBBL_MIN2';
@@ -17,8 +50,17 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'MingLiU_PLBBL_MIN2', monospace;
-  color: #BCA98A;
-  background-color: #231420;
+  line-height: 1.2;
+}
+
+html {
+  color: $color-text;
+  background-color: $color-background;
+}
+
+.layout-root {
+  min-height: 100vh;
+  position: relative;
 }
 
 
@@ -51,13 +93,17 @@ html { font-size: 2.962962963vw; }
 /* 16:9 WL (landscape) */
 @media (min-aspect-ratio: 4/3) {
   html { font-size: 1.666666667vw; }
-  .container { width: 55.75rem; }
+  .container { width: 55rem; }
 }
 
 /* 16:9 HL (landscape) */
 @media (min-aspect-ratio: 16/9) {
   html { font-size: 2.962962963vh; }
 }
+
+/* Dev start */
+/* html { font-size: 32px !important; } */
+/* Dev end */
 
 .container {
   margin-left: auto;
@@ -71,8 +117,22 @@ h2,
 h3,
 h4,
 h5 {
+  color: $color-primary;
   margin-top: 0;
   margin-bottom: 0;
+  font-weight: 400;
+}
+
+h1 {
+  font-size: $text-huge;
+}
+
+h2 {
+  font-size: $text-large;
+}
+
+h3 {
+  font-size: $text-large;
 }
 
 p {
