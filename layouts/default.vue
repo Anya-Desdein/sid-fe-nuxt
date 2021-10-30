@@ -3,6 +3,7 @@
     <Header></Header>
     <Nuxt />
     <Footer></Footer>
+    <div class="bg-gradient"></div>
     <div class="bg-img">
       <div class="container">
         <img src="~assets/img/rendering_v3)glow_alphabg.png" alt="background image">
@@ -20,8 +21,7 @@
   top:4rem;
   left:0;
   right:0;
-    // ;
-
+  
   .container {
     position: relative;
   }
@@ -31,9 +31,24 @@
     position: absolute;
     transform: translateX(50%);
     right: 100% * 0.2 * 1.5;
-    height: 30rem;
+    height: 40rem;
     opacity: 0.8;
   }
+}
+
+.bg-gradient {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 25vh;
+  
+  background-image: linear-gradient( 
+    to bottom,
+    transparent, 
+    transparentize(red, 0.74)  
+    );
+  z-index: -101;
 }
 </style>
 
