@@ -2,7 +2,7 @@
 <div>
     <PageHeading></PageHeading>
     <div class="container page-container tos-page"> 
-      <h2>This is terms of service</h2>
+      <h1>This is terms of service</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt turpis purus, vitae accumsan velit lobortis sit amet. Pellentesque faucibus eleifend lectus, eget ultrices nisl sagittis sit amet. Sed vulputate malesuada scelerisque. Duis eu laoreet nulla. Proin diam dolor, maximus et dictum at, lobortis a mi. Mauris blandit cursus est, volutpat laoreet tellus ultricies ut. Proin auctor eu lorem et scelerisque. Phasellus eleifend interdum dui, sed convallis felis tincidunt sit amet.
       </p>
       <h3>Subheading</h3>
@@ -26,12 +26,17 @@
 <style lang="scss" scoped>
 .tos-page {
   
+  h1 {
+    width: calc(100% * 0.2 * 4 - 0.5rem);
+
+  }
+
   h2, h3 {
-    margin-bottom: 0.8em;
-    margin-top: 0.8em;
+    margin-bottom: 1.2em;
+    margin-top: 1.2em;
   }
   p {
-    margin-bottom: 0.8em;
+    margin-bottom: 1.2em;
   }
 }
 </style>

@@ -6,7 +6,7 @@
     <div class="bg-gradient"></div>
     <div class="bg-img">
       <div class="container">
-        <img src="~assets/img/rendering_v3)glow_alphabg.png" alt="background image">
+        <img src="~assets/img/post_resize_after_blur2.png" alt="background image">
       </div>
     </div>
   </div>
@@ -30,9 +30,9 @@
     display: block;
     position: absolute;
     transform: translateX(50%);
-    right: 100% * 0.2 * 1.5;
-    height: 40rem;
-    opacity: 0.8;
+    right: 100% * 0.2 * 1.6;
+    width: 30rem;
+    opacity: 0.46;
   }
 }
 
@@ -46,9 +46,9 @@
   background-image: linear-gradient( 
     to bottom,
     transparent, 
-    transparentize(red, 0.74)  
+    transparentize(#6f1d29, 0.73)
     );
-  z-index: -101;
+  z-index: -99;
 }
 </style>
 
@@ -140,6 +140,13 @@ h5 {
 
 h1 {
   font-size: $text-huge;
+  width: $heading-underscore-width;
+  border-bottom: $border;
+  text-align: center;
+  padding-bottom: 0.3rem;
+  margin-bottom: 1.6rem;
+  margin-top: -1rem;
+  
 }
 
 h2 {

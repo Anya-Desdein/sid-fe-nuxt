@@ -25,15 +25,6 @@ export default {
   display:flex;
   flex-direction: column-reverse;
 
-  &__title {
-    width: 100% * 0.2 * 2;
-    border-bottom: $border;
-    text-align: center;
-    padding-top: 1.5rem;
-    padding-bottom: 0.3rem;
-    margin-bottom: 1.6rem;
-  }
-
   &__info-bar {
     text-align: right;
     font-size: $text-larger;
@@ -42,6 +33,7 @@ export default {
     width: 100%;
     border-bottom: $border;
     min-height: 3.26rem;
+    margin-bottom: 2.5rem;
   }
 }
 

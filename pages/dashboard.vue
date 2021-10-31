@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PageHeading title="asd">Ostatnia aktualizacja: 18:20</PageHeading>
+    <PageHeading>Ostatnia aktualizacja: 18:20</PageHeading>
     <div class="container page-container">
       <AppGrid>
         <div><DataTile><h2>Temperatura rara rarara 1</h2><p>Pokój 1: 123</p><p>Pokój 2: 234</p></DataTile></div>
