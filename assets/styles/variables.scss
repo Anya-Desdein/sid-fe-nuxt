@@ -2,15 +2,6 @@ $transition: .4s cubic-bezier(0, 0.21, 0.88, 1.01);
 $border: $color-primary 0.0625rem solid;
 $heading-underscore-width: calc(100% * 0.2 * 2 - 0.5rem);
 
-@mixin h1-border {
-  width: $heading-underscore-width;
-  border-bottom: $border;
-  text-align: center;
-  padding-bottom: 0.3rem;
-  margin-bottom: 1.6rem;
-  margin-top: -1rem;
-}
-
 $text-huge: 2.8125rem;
 $text-larger: 1.375rem;
 $text-large: 1.25rem;

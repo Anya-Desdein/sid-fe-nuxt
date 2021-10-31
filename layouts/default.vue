@@ -33,7 +33,17 @@
     right: 100% * 0.2 * 1.6;
     width: 30rem;
     opacity: 0.46;
+
+    @include bp(min-landscape) {
+      margin-top: 1rem;
+    }
+
+    @include bp(max-square) {
+    top: 9.6rem;
+    right: 54%;
+    }
   }
+
 }
 
 .bg-gradient {
@@ -145,8 +155,6 @@ h1 {
   text-align: center;
   padding-bottom: 0.3rem;
   margin-bottom: 1.6rem;
-  margin-top: -1rem;
-  
 }
 
 h2 {

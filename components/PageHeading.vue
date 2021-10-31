@@ -25,6 +25,10 @@ export default {
   display:flex;
   flex-direction: column-reverse;
 
+  &__title { 
+    margin-top: -1rem;
+  }
+
   &__info-bar {
     text-align: right;
     font-size: $text-larger;
@@ -36,6 +40,34 @@ export default {
     margin-bottom: 2.5rem;
   }
 }
+
+ @include bp(max-square) {
+   .page-heading {
+     flex-direction: column;
+   
+    &__title {
+      text-align: center;
+      padding: 0.8rem 0;
+      width: 100%;
+      margin-top: 0;
+      min-height: 3.26rem;
+      border-bottom: none;
+    } 
+
+    h1 {
+      margin-bottom: 0;
+    }
+
+    &__info-bar {
+    border-top: #BEAC8F 0.0625rem solid;
+    border-bottom: none;
+    margin-bottom: 1.6rem; 
+    //  policzyć ile ma mieć margin-bottom
+    }
+
+  }
+
+ }
 
 
 

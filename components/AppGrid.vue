@@ -8,6 +8,7 @@
 .app-grid {
   display: grid;
   gap: 3rem 1rem;
+  // change gap in sqare and mobile
   grid-auto-flow: row;
   grid-auto-rows: 1fr;
   grid-auto-columns: minmax(0, 1fr);
