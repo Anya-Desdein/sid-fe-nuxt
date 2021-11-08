@@ -6,14 +6,20 @@
     <div class="bg-gradient"></div>
     <div class="bg-img">
       <div class="container">
-        <img src="~assets/img/post_resize_after_blur2.png" alt="background image">
+        <img src="~assets/img/Background_v31_blurred.png" alt="background image">
       </div>
+    </div>
+    <div class="bg-fireflies">
+      <!-- <div v-for="i in 5" :key="i">{{i}}</div> -->
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Xanh+Mono&display=swap');
+</style>
 
+<style lang="scss" scoped>
 
 .bg-img {
   position: fixed;
@@ -30,17 +36,17 @@
     display: block;
     position: absolute;
     transform: translateX(50%);
-    right: 100% * 0.2 * 1.6;
+    right: 100% * 0.2 * 1.61;
     width: 30rem;
-    opacity: 0.46;
+    opacity: 0.54;
 
     @include bp(min-landscape) {
       margin-top: 1rem;
     }
 
     @include bp(max-square) {
-    top: 9.6rem;
-    right: 54%;
+      top: 9.8rem;
+      right: 53%;
     }
   }
 
@@ -56,9 +62,9 @@
   background-image: linear-gradient( 
     to bottom,
     transparent, 
-    transparentize(#6f1d29, 0.73)
+    transparentize(#5c001a, 0.74)
     );
-  z-index: -99;
+  z-index: -101;
 }
 </style>
 
@@ -71,23 +77,33 @@
        url('~assets/fonts/MingLiU_PLBBL_MIN2.woff2') format('woff2');
 }
 
+
 html, body {
   margin: 0;
   padding: 0;
-  font-family: 'MingLiU_PLBBL_MIN2', monospace;
-  line-height: 1.2;
+  line-height: $line-height;
 }
 
 html {
+  font-family: 'Xanh Mono', monospace;
+  // font-family: 'MingLiU_PLBBL_MIN2', monospace;
   color: $color-text;
   background-color: $color-background;
+}
+
+body {
+  text-shadow: $color-background 0 0 0.10rem, 
+    $color-background 0 0 0.15rem,
+    transparentize($color-background, 0.4) 0 0 1rem,   
+    transparentize($color-background, 0.3) 0 0 2.8rem,  
+    transparentize($color-background, 0.8) 0 0 3rem;
+  font-size: $text-normal;
 }
 
 .layout-root {
   min-height: 100vh;
   position: relative;
 }
-
 
 /* 
   App scaling
@@ -151,7 +167,6 @@ h5 {
 h1 {
   font-size: $text-huge;
   width: $heading-underscore-width;
-  border-bottom: $border;
   text-align: center;
   padding-bottom: 0.3rem;
   margin-bottom: 1.6rem;

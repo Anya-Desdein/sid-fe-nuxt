@@ -17,6 +17,7 @@
     "c5 c6 c7 e c8";
 
   @include bp(max-square) {
+    gap: 4rem 1rem;
     grid-template-areas:   
       "c1 c2 c3"   
       "c4  e c5"

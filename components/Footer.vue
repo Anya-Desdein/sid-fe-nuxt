@@ -20,15 +20,15 @@ export default {
   border-top: $border;
   font-size: $text-large;
   color: $color-primary;
-  padding: 0.8rem 0;
-  margin-top: 0.8rem;
+  padding: 0.8rem 0 0.65rem;
   position: absolute;
   bottom: 0;
   width: 100%;
 }
 
 .ghost {
-  height: 4rem;
+  margin-top: 1.2rem;
+  height: (0.8rem + 0.65rem) + ($text-large * $line-height);
 }
 
 </style>

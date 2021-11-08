@@ -31,16 +31,22 @@ export default {
 
 <style scoped lang="scss">
 
+
+// nav content
+$font-size: 1.775rem;
+$top-padding: 0.8075rem;
+$bottom-padding: 0.6125rem;
+
 img {
   height: 2.5rem;
-  margin-top: 0.265rem;
+  margin-top: 0.2rem;
   margin-right: 1.625rem;
   display: block;
 }
 
 header .content {
   background-color: $color-black;
-  font-size: 1.875rem;
+  font-size:$font-size;
   color: $color-nav-inactive; 
   border-bottom: $border;
   position: fixed;
@@ -48,17 +54,19 @@ header .content {
   left: 0;
   right: 0;
   z-index: 100;
+  text-shadow: none;
 }
 
 header .ghost {
-  height: 4rem;
+  $bar-height: calc(#{($font-size * $line-height) + $top-padding + $bottom-padding} - 1px);
+  height: $bar-height;
   position: relative;
 
   &:after {
     content: '';
     position: fixed;
     z-index: -10;
-    top: 3.875rem;
+    top: $bar-height;
     height: 2rem;
     width: 100%;
     background: linear-gradient(
@@ -87,7 +95,7 @@ ul {
 
 a:not(.icon) {
   display: inline-block;
-  padding: 0.875rem 0.875rem 0.8125rem;
+  padding: $top-padding 0.875rem $bottom-padding;
   margin-left: 2rem;
 
   transition: color $transition;
@@ -96,6 +104,13 @@ a:not(.icon) {
     text-decoration: none;
     color: inherit;
   }
+
 }
+@include bp(max-portrait) {
+  a:not(.icon) {
+    margin-left: 1rem;
+  }
+}
+
 
 </style>

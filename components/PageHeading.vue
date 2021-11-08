@@ -1,5 +1,5 @@
 <template>
- <div class="page-heading">
+ <div class="page-heading" :class="{'page-heading--title': title, 'page-heading--no-info-bar': noInfoBar}">
     <div class="container" v-if="title">
       <h1 class="page-heading__title">{{title}}</h1>
     </div>
@@ -14,7 +14,8 @@
 <script>
 export default {
   props: {
-    title: String
+    title: String,
+    noInfoBar: Boolean
   }
 }
 </script>
@@ -27,47 +28,59 @@ export default {
 
   &__title { 
     margin-top: -1rem;
+    border-bottom: $border;
   }
 
   &__info-bar {
     text-align: right;
     font-size: $text-larger;
     color: $color-primary;
-    padding: 0.8rem 0;
+    padding: 0.8rem 0 0.65rem;
     width: 100%;
     border-bottom: $border;
-    min-height: 3.26rem;
+    min-height: (0.8rem + 0.65rem) + $text-larger * $line-height;
     margin-bottom: 2.5rem;
   }
 }
 
- @include bp(max-square) {
-   .page-heading {
-     flex-direction: column;
-   
-    &__title {
-      text-align: center;
-      padding: 0.8rem 0;
-      width: 100%;
-      margin-top: 0;
-      min-height: 3.26rem;
-      border-bottom: none;
-    } 
-
-    h1 {
-      margin-bottom: 0;
-    }
-
+@include bp(max-square) {
+  .page-heading {
+    flex-direction: column;
     &__info-bar {
-    border-top: #BEAC8F 0.0625rem solid;
-    border-bottom: none;
-    margin-bottom: 1.6rem; 
-    //  policzyć ile ma mieć margin-bottom
+      text-align: center;
     }
 
-  }
+    &--title {
+      h1 {
+        margin-bottom: 0;
+      }
+      .page-heading__title {
+        border-bottom: none;
+        text-align: center;
+        padding: 0.8rem 0 0.65rem;
+        width: 100%;
+        margin-top: 0;
+        min-height: (0.8rem + 0.65rem) + $text-huge * $line-height;
+      } 
+      .page-heading__info-bar {
+        border-bottom: #BEAC8F 0.0625rem solid;
+        border-top: none;
+        text-align: center;
+        margin-bottom: 1.2rem; 
+        padding-top: 0;
+        min-height: (0 + 0.65rem) + $text-larger * $line-height;
+      }
+    }
 
- }
+    &--no-info-bar {
+      .page-heading__info-bar {
+        min-height: 0;
+        padding: 0;
+      }
+    }
+  }
+}
+
 
 
 
