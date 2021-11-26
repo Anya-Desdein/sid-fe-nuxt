@@ -7,6 +7,7 @@
     <div class="bg-img">
       <div class="container"> 
         <img src="~assets/img/Background_v32_blurred.png" alt="background image">
+        <img src="~assets/img/kokeshi_eyes.png" alt="background eyes" class="eyes">
       </div>
     </div>
     <div class="bg-fireflies">
@@ -58,6 +59,32 @@ export default {
   top:4rem;
   left:0;
   right:0;
+  
+  .eyes {
+    opacity: 0%;
+    animation: eye-glow 12s infinite;
+    animation-delay: 5s;
+  }
+  @keyframes eye-glow {
+    0% {
+      opacity:0%;
+    }
+    55% {
+      opacity:0%;
+    }
+    65% {
+      opacity: 15%;
+    }
+    70% {
+      opacity: 40%;
+    }
+    78% {
+      opacity:80%;
+    }
+    100%{
+      opacity:0%;
+    }
+  }
   
   .container {
     position: relative;
