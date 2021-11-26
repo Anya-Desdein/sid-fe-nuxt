@@ -5,15 +5,46 @@
     <Footer></Footer>
     <div class="bg-gradient"></div>
     <div class="bg-img">
-      <div class="container">
-        <img src="~assets/img/Background_v31_blurred.png" alt="background image">
+      <div class="container"> 
+        <img src="~assets/img/Background_v32_blurred.png" alt="background image">
       </div>
     </div>
     <div class="bg-fireflies">
-      <!-- <div v-for="i in 5" :key="i">{{i}}</div> -->
+      <div v-for="(el, i) in elements" :key="i" :class="el"></div>
     </div>
   </div>
 </template>
+
+
+<script>
+export default {
+  data() {
+    let numberArray = [
+      [5, 'firefly-a'], 
+      [22, 'firefly-b'], 
+      [33, 'firefly-c'], 
+      [41, 'firefly-d'], 
+      [180, 'firefly-e']
+    ];
+
+    const elements = [];
+    let i = 0;
+
+    for(let [count, name] of numberArray) {
+      for(let j = 0; j < count; j++) {
+        elements.push(['firefly', name, 'firefly-' + (i++)])
+      }
+    }
+
+    console.log("Total fireflies:", i);
+
+    return {
+      elements
+    };
+  }
+}
+</script>
+
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Xanh+Mono&display=swap');
@@ -190,4 +221,271 @@ p {
 *:after {
   box-sizing: border-box;
 }
+
+.firefly {
+  background: #a35d4b;
+  border-radius: 50%;
+  width: 0.5em;
+  height: 0.5em;
+  position: fixed;
+  transform: translate(-50%, -50%);
+}
+
+.firefly-a {
+  opacity: 20%;
+  animation: submove1 31s infinite;
+  animation: move1 61s infinite;
+}
+@keyframes submove1{
+  0% {
+    margin: 0;
+  }
+  20%{
+    margin-left: -0.2rem;
+    margin-top: -0.1rem;
+  }
+  40%{
+    margin-left: -0.1rem;
+    margin-top: 0.2rem;
+  }
+  60%{
+    margin-left: -0.3rem;
+    margin-top: 0.2rem;
+  }  
+  80%{
+    margin-left: 0.275rem;
+    margin-top: -0.13rem;
+  }  
+  100%{
+    margin: 0;
+  }
+}
+@keyframes move1 {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(1.2);
+  }
+  25% {
+    transform: translate(-50%, -50%) translate(-0.7rem, 0.8rem) scale(1.75);
+    background: #862d3f;
+  }
+  50% {
+    transform: translate(-50%, -50%) translate(-1rem, -0.4rem) scale(0.7);
+  }
+  90% {
+    transform: translate(-50%, -50%) translate(0.2rem, 1rem) scale(1.4);
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(1.2);
+  }
+}
+
+
+.firefly-b {
+  opacity: 25%;
+  animation: submove2 43s infinite;
+  animation: move2 85s infinite;
+}
+@keyframes submove2{
+  0% {
+    margin: 0;
+  }
+  13%{
+    margin-left: 0.1rem;
+    margin-top: 0.3rem;
+  }
+  20%{
+    margin-left: -0.4rem;
+    margin-top: 0.2rem;
+  }
+  33%{
+    margin-left: -0.2rem;
+    margin-top: 0.7rem;
+  }  
+  49%{
+    margin-left: -0.4rem;
+    margin-top: 0.2rem;
+  }
+  59%{
+    margin-left: -0.7rem;
+    margin-top: -0.4rem;
+  }  
+  74%{
+    margin-left: 0.3rem;
+    margin-top: -0.2rem;
+  }    
+  100%{
+    margin: 0;
+  }
+}
+@keyframes move2 {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.9);
+  }
+  17% {
+    transform: translate(-50%, -50%) translate(-0.7rem, 1rem) scale(1);
+  }
+  33% {
+    transform: translate(-50%, -50%) translate(-1.2rem, -0.4rem) scale(0.65);
+  }
+  62% {
+    transform: translate(-50%, -50%) translate(0.2rem, 1.2rem) scale(1.2);
+    background: #862d3f;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.9);
+  }
+}
+
+.firefly-c {
+  opacity: 30%;
+  animation: submove3 8s infinite;
+  animation: move3 5s infinite;
+}
+@keyframes submove3{
+  0% {
+    margin: 0;
+  }
+  20%{
+    margin-left: 0.1rem;
+    margin-top: 0.05rem;
+  }
+  40%{
+    margin-left: 0.15rem;
+    margin-top: -0.2rem;
+  }
+  60%{
+    margin-left: -0.1rem;
+    margin-top: -0.22rem;
+    background: #862d3f;
+  }  
+  80%{
+    margin-left: -0.08rem;
+    margin-top: -0.2rem;
+  }  
+  100%{
+    margin: 0;
+  }
+}
+@keyframes move3 {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.4);
+  }
+  25% {
+    transform: translate(-50%, -50%) translate(-0rem, 0rem) scale(0.3);
+  }
+  90% {
+    transform: translate(-50%, -50%) translate(0rem, 0rem) scale(0.2);
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.4);
+  }
+}
+
+.firefly-d {
+  
+  opacity: 40%;
+  animation: submove4 6s infinite;
+  animation: move4 11s infinite;
+}
+@keyframes submove4{
+  0% {
+    margin: 0;
+  }
+  20%{
+    margin-left: -0.2rem;
+    margin-top: -0.1rem;
+  }
+  40%{
+    margin-left: 0.1rem;
+    margin-top: 0.3rem;
+  }
+  60%{
+    margin-left: -0.4rem;
+    margin-top: -0.2rem;
+  }  
+  80%{
+    margin-left: -0.13rem;
+    margin-top: 0.08rem;
+    background: #862d3f;
+  }  
+  100%{
+    margin: 0;
+  }
+}
+@keyframes move4 {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.38);
+  }
+  45% {
+    transform: translate(-50%, -50%) translate(-1.2rem, -0.4rem) scale(0.43);
+  }
+  55% {
+    transform: translate(-50%, -50%) translate(-0.7rem, 1rem) scale(0.34);
+  }
+  70% {
+    transform: translate(-50%, -50%) translate(0.2rem, 1.2rem) scale(0.37);
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.38);
+  }
+}
+
+.firefly-e {
+  opacity: 50%;
+  animation: submove5 3s infinite;
+  animation: move5 7s infinite;
+}
+@keyframes submove5{
+  0% {
+    margin: 0;
+  }
+  20%{
+    margin-left: 0.4rem;
+    margin-top: -1rem;
+  }
+  40%{
+    margin-left: -0.8rem;
+    margin-top: -0.2rem;
+  }
+  60%{
+    margin-left: 0.1rem;
+    margin-top: 0.4rem;
+  }  
+  80%{
+    margin-left: 0.5rem;
+    margin-top: 0.7rem;
+  }  
+  100%{
+    margin: 0;
+  }
+}
+@keyframes move5 {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.15);
+  }
+  45% {
+    transform: translate(-50%, -50%) translate(1.4rem, -0.8rem) scale(0.2);
+  }
+  55% {
+    transform: translate(-50%, -50%) translate(0.7rem, 2rem) scale(0.23);
+  }
+  75% {
+    transform: translate(-50%, -50%) translate(-0.3rem, 1rem) scale(0.23);
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.15);
+  }
+}
+
+
+$i: 281;
+@for $i from 0 through $i { 
+  .firefly-#{$i} { 
+    top: (random(95) + 5) * 1vh;
+    left: (random(105)-2.5) * 1vw; 
+    animation-delay: -1s + ($i % 3);
+    animation-duration: 10s + ($i % 8), 2s + ($i % 3);
+  } 
+}
+
 </style>
