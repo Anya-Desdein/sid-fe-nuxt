@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="bg-fireflies">
-      <div v-for="(el, i) in elements" :key="i" :class="el"></div>
+      <div v-for="(el, i) in elements" :key="i" :class="el" ><div class="firefly-inner"></div></div>
     </div>
   </div>
 </template>
@@ -21,11 +21,11 @@
 export default {
   data() {
     let numberArray = [
-      [5, 'firefly-a'], 
-      [22, 'firefly-b'], 
-      [33, 'firefly-c'], 
-      [41, 'firefly-d'], 
-      [180, 'firefly-e']
+      [7, 'firefly-a'], 
+      [30, 'firefly-b'], 
+      [30, 'firefly-c'], 
+      [80, 'firefly-d'], 
+      [100, 'firefly-e']
     ];
 
     const elements = [];
@@ -250,16 +250,68 @@ p {
 }
 
 .firefly {
-  background: #a35d4b;
-  border-radius: 50%;
-  width: 0.5em;
-  height: 0.5em;
+  opacity: 2%;
   position: fixed;
-  transform: translate(-50%, -50%);
+  
+  &:before, &:after, .firefly-inner:before, .firefly-inner:after {
+    position: absolute;
+    content: '';
+    display: block;
+    width: 5em;
+    height: 5em;
+    transform: translate(-50%, -50%);
+    background-image: url("~assets/img/firefly21.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation: fireflyFrameAnimation 1s infinite;
+    animation-delay: -0.75s;
+    animation-timing-function: cubic-bezier(0.6, 0.3, 0.3, 0.6);
+  }
+  &:after {
+    background-image: url("~assets/img/firefly22.svg");
+    animation-delay: -0.5s;
+  }
+  .firefly-inner:before {
+    background-image: url("~assets/img/firefly24.svg");
+    animation-delay: -0.25s;
+  }
+  .firefly-inner:after {
+    background-image: url("~assets/img/firefly23.svg");
+    animation-delay: 0s;
+  }
 }
 
+
+@keyframes fireflyFrameAnimation {
+  0% {
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 0.15;
+  }
+  12% {
+    opacity: 0.35;
+  }
+  25% {
+    opacity: 0.55;
+  }
+  37% {
+    opacity: 0.35;
+  }
+  42% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
 .firefly-a {
-  opacity: 20%;
   animation: submove1 31s infinite;
   animation: move1 61s infinite;
 }
@@ -293,7 +345,6 @@ p {
   }
   25% {
     transform: translate(-50%, -50%) translate(-0.7rem, 0.8rem) scale(1.75);
-    background: #862d3f;
   }
   50% {
     transform: translate(-50%, -50%) translate(-1rem, -0.4rem) scale(0.7);
@@ -308,7 +359,7 @@ p {
 
 
 .firefly-b {
-  opacity: 25%;
+  opacity: 70%;
   animation: submove2 43s infinite;
   animation: move2 85s infinite;
 }
@@ -356,7 +407,6 @@ p {
   }
   62% {
     transform: translate(-50%, -50%) translate(0.2rem, 1.2rem) scale(1.2);
-    background: #862d3f;
   }
   100% {
     transform: translate(-50%, -50%) translate(0, 0) scale(0.9);
@@ -383,7 +433,6 @@ p {
   60%{
     margin-left: -0.1rem;
     margin-top: -0.22rem;
-    background: #862d3f;
   }  
   80%{
     margin-left: -0.08rem;
@@ -433,7 +482,6 @@ p {
   80%{
     margin-left: -0.13rem;
     margin-top: 0.08rem;
-    background: #862d3f;
   }  
   100%{
     margin: 0;
