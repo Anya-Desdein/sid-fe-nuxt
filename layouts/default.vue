@@ -20,13 +20,25 @@
 <script>
 export default {
   data() {
-    let numberArray = [
-      [7, 'firefly-a'], 
-      [30, 'firefly-b'], 
-      [30, 'firefly-c'], 
-      [80, 'firefly-d'], 
-      [100, 'firefly-e']
+    let presets = [
+      [
+        [3, 'firefly-a'], 
+        [6, 'firefly-b'], 
+        [9, 'firefly-c'], 
+        [15, 'firefly-d'], 
+        [12, 'firefly-e'],
+        [33, 'firefly-h'],
+        [61, 'firefly-i'],
+      ],
+      [
+        [5, 'firefly-f'], 
+        [22, 'firefly-g'], 
+        [33, 'firefly-h'], 
+        [41, 'firefly-i'],
+      ]
     ];
+
+    const numberArray = presets[0];
 
     const elements = [];
     let i = 0;
@@ -249,60 +261,85 @@ p {
   box-sizing: border-box;
 }
 
-.firefly {
-  opacity: 2%;
-  position: fixed;
-  
+@mixin fireflyAnimation($frameTime) {
   &:before, &:after, .firefly-inner:before, .firefly-inner:after {
-    position: absolute;
-    content: '';
-    display: block;
-    width: 5em;
-    height: 5em;
-    transform: translate(-50%, -50%);
-    background-image: url("~assets/img/firefly21.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    animation: fireflyFrameAnimation 1s infinite;
-    animation-delay: -0.75s;
-    animation-timing-function: cubic-bezier(0.6, 0.3, 0.3, 0.6);
+    animation: fireflyFrameAnimation (4*$frameTime) infinite;
+    animation-delay: -3 * $frameTime;
   }
   &:after {
-    background-image: url("~assets/img/firefly22.svg");
-    animation-delay: -0.5s;
+    animation-delay: -2 * $frameTime;
   }
   .firefly-inner:before {
-    background-image: url("~assets/img/firefly24.svg");
-    animation-delay: -0.25s;
+    animation-delay: -1 * $frameTime;
   }
   .firefly-inner:after {
-    background-image: url("~assets/img/firefly23.svg");
     animation-delay: 0s;
   }
 }
 
+.firefly {
+  opacity: 35%;
+  position: fixed;
+  z-index: -300;
+}
+
+.firefly-a,
+.firefly-b,
+.firefly-c,
+.firefly-d,
+.firefly-e {
+  @include fireflyAnimation(0.4s);
+  &:before, &:after, .firefly-inner:before, .firefly-inner:after {
+    position: absolute;
+    content: '';
+    display: block;
+    width: 0.5em;
+    height: 0.5em;
+    transform: translate(-50%, -50%);
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation-timing-function: cubic-bezier(1, 0.08, 0, 0.92);
+  }
+  &:before {
+    background-image: url("~assets/img/firefly21.svg");
+  }
+  &:after {
+    background-image: url("~assets/img/firefly22.svg");
+  }
+  .firefly-inner:before {
+    background-image: url("~assets/img/firefly24.svg");
+  }
+  .firefly-inner:after {
+    background-image: url("~assets/img/firefly23.svg");
+  }
+}
+
+.firefly-f,
+.firefly-g,
+.firefly-h,
+.firefly-i {
+  // filter: hue-rotate(-16.41deg);
+  // filter: hue-rotate(12.27deg) saturate(0.761);
+  border-radius: 50%;
+  display: block;
+  width: 0.5em;
+  height: 0.5em;
+  transform: translate(-50%, -50%);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url("~assets/img/firefly27_red.svg");
+  animation-timing-function: cubic-bezier(1, 0.08, 0, 0.92);
+  filter: hue-rotate(12.27deg) saturate(0.761);
+}
 
 @keyframes fireflyFrameAnimation {
   0% {
     opacity: 0;
   }
-
-  8% {
-    opacity: 0.15;
+  27% {
+    opacity: 1;
   }
-  12% {
-    opacity: 0.35;
-  }
-  25% {
-    opacity: 0.55;
-  }
-  37% {
-    opacity: 0.35;
-  }
-  42% {
-    opacity: 0.15;
-  }
-  50% {
+  54% {
     opacity: 0;
   }
   100% {
@@ -310,7 +347,7 @@ p {
   }
 }
 
-
+//butterflies
 .firefly-a {
   animation: submove1 31s infinite;
   animation: move1 61s infinite;
@@ -322,6 +359,7 @@ p {
   20%{
     margin-left: -0.2rem;
     margin-top: -0.1rem;
+    transform: rotate(40deg);
   }
   40%{
     margin-left: -0.1rem;
@@ -341,27 +379,32 @@ p {
 }
 @keyframes move1 {
   0% {
-    transform: translate(-50%, -50%) translate(0, 0) scale(1.2);
+    transform: rotate(0deg) translate(-50%, -50%) translate(0, 0) scale(3.8);
+    opacity: 40%;
+    filter: hue-rotate(0deg);
   }
-  25% {
-    transform: translate(-50%, -50%) translate(-0.7rem, 0.8rem) scale(1.75);
+  35% {
+    transform: rotate(-100deg) translate(-50%, -50%) translate(-0.6rem, 0.4rem) scale(3.2);
   }
   50% {
-    transform: translate(-50%, -50%) translate(-1rem, -0.4rem) scale(0.7);
+    transform: rotate(-160deg) translate(-50%, -50%) translate(-1rem, -0.4rem) scale(2.6);
+    opacity:25%;
   }
-  90% {
-    transform: translate(-50%, -50%) translate(0.2rem, 1rem) scale(1.4);
+  70% {
+    transform: rotate(80deg) translate(-50%, -50%) translate(0.2rem, 1rem) scale(3.2);
+    filter: hue-rotate(20deg);
   }
   100% {
-    transform: translate(-50%, -50%) translate(0, 0) scale(1.2);
+    transform: rotate(0deg) translate(-50%, -50%) translate(0, 0) scale(3.8);
+    opacity: 40%;
+    filter: hue-rotate(0deg);
   }
 }
 
 
 .firefly-b {
-  opacity: 70%;
   animation: submove2 43s infinite;
-  animation: move2 85s infinite;
+  animation: move2 720s infinite;
 }
 @keyframes submove2{
   0% {
@@ -397,26 +440,33 @@ p {
 }
 @keyframes move2 {
   0% {
-    transform: translate(-50%, -50%) translate(0, 0) scale(0.9);
+    transform: rotate(0deg) translate(-50%, -50%) translate(0, 0) scale(2.5);
+    opacity: 45%;
+    filter: hue-rotate(10deg);
   }
   17% {
-    transform: translate(-50%, -50%) translate(-0.7rem, 1rem) scale(1);
+    transform: rotate(-80deg) translate(-50%, -50%) translate(-0.4rem, 0.6rem) scale(2);
+    opacity:55%;
+    filter: hue-rotate(25deg);
   }
   33% {
-    transform: translate(-50%, -50%) translate(-1.2rem, -0.4rem) scale(0.65);
+    transform: rotate(60deg) translate(-50%, -50%) translate(0.6rem, -1rem) scale(2.1);
+    opacity: 45%;
   }
   62% {
-    transform: translate(-50%, -50%) translate(0.2rem, 1.2rem) scale(1.2);
+    transform: rotate(40deg) translate(-50%, -50%) translate(-0.3rem, -0.3rem) scale(2.9);
+    opacity: 5%;
   }
   100% {
-    transform: translate(-50%, -50%) translate(0, 0) scale(0.9);
+    transform: rotate(0deg) translate(-50%, -50%) translate(0, 0) scale(2.5);
+    opacity: 45%;
+    filter: hue-rotate(10deg);
   }
 }
 
 .firefly-c {
-  opacity: 30%;
   animation: submove3 8s infinite;
-  animation: move3 5s infinite;
+  animation: move3 15s infinite;
 }
 @keyframes submove3{
   0% {
@@ -444,22 +494,28 @@ p {
 }
 @keyframes move3 {
   0% {
-    transform: translate(-50%, -50%) translate(0, 0) scale(0.4);
+    transform: rotate(120deg) translate(-50%, -50%) translate(0, 0) scale(1.9);
+    opacity: 30%;
+    filter: hue-rotate(5deg);
   }
   25% {
-    transform: translate(-50%, -50%) translate(-0rem, 0rem) scale(0.3);
+    transform: rotate(60deg) translate(-50%, -50%) translate(-1.6rem, -2.2rem) scale(2.8);
+    opacity: 25%;
+    filter: hue-rotate(15deg);
   }
-  90% {
-    transform: translate(-50%, -50%) translate(0rem, 0rem) scale(0.2);
+  40% {
+    transform: rotate(80deg) translate(-50%, -50%) translate(-2rem, -1.2rem) scale(2.2);
+    opacity: 50%;
+    filter: hue-rotate(15deg);
   }
   100% {
-    transform: translate(-50%, -50%) translate(0, 0) scale(0.4);
+    transform: rotate(120deg) translate(-50%, -50%) translate(0, 0) scale(1.9);
+    opacity: 30%;
+    filter: hue-rotate(5deg);
   }
 }
 
 .firefly-d {
-  
-  opacity: 40%;
   animation: submove4 6s infinite;
   animation: move4 11s infinite;
 }
@@ -489,6 +545,291 @@ p {
 }
 @keyframes move4 {
   0% {
+    transform: rotate(-70deg) translate(-50%, -50%) translate(0, 0) scale(1.6);
+    opacity: 35%;
+    filter: hue-rotate(10deg);
+  }
+  45% {
+    transform: translate(-50%, -50%) translate(1.2rem, 0.4rem) scale(2);
+    opacity: 70%;
+    filter: hue-rotate(25deg);
+  }
+  55% {
+    transform: rotate(-130deg) translate(-50%, -50%) translate(-1rem, 0.3rem) scale(1.4);
+    filter: hue-rotate(40deg);
+  }
+  70% {
+    transform: rotate(-40deg) translate(-50%, -50%) translate(0.2rem, 1rem) scale(2.2);
+  }
+  100% {
+    transform: rotate(-70deg) translate(-50%, -50%) translate(0, 0) scale(1.6);
+     opacity: 35%;
+    filter: hue-rotate(10deg);
+  }
+}
+
+.firefly-e {
+  animation: submove5 3s infinite;
+  animation: move5 1200s infinite;
+}
+.firefly-e:nth-child(2) {
+  animation: move6 360s infinite;
+}
+@keyframes submove5{
+  0% {
+    margin: 0;
+  }
+  20%{
+    margin-left: 0.2rem;
+    margin-top: -0.3rem;
+  }
+  40%{
+    margin-left: -0.2rem;
+    margin-top: -0.2rem;
+  }
+  60%{
+    margin-left: 0.1rem;
+    margin-top: 0.2rem;
+  }  
+  80%{
+    margin-left: 0.3rem;
+    margin-top: 0.1rem;
+  }  
+  100%{
+    margin: 0;
+  }
+}
+@keyframes move5 {
+  0% {
+    transform: rotate(-180deg) translate(-50%, -50%) translate(1.4rem, 6rem) scale(1.5);
+    opacity: 0%;
+    filter: hue-rotate(10deg);
+  }
+  2% {
+
+    opacity: 5%;
+  }
+  45% {
+    transform: rotate(-170deg) translate(-50%, -50%) translate(2rem, 4rem) scale(1.5);
+    opacity: 40%;
+    filter: hue-rotate(10deg);
+  }
+  60% {
+    transform: rotate(-180deg)  translate(-50%, -50%) translate(0rem, 0rem) scale(1.2);
+    opacity: 50%;
+  }
+  75% {
+    transform: rotate(-90deg) translate(-50%, -50%) translate(-2rem, -1rem) scale(1.6);
+    opacity: 40%;
+    filter: hue-rotate(30deg);
+  }
+  95% {
+    transform: rotate(-120deg) translate(-50%, -50%) translate(-2.5rem, -1rem) scale(1.3);
+    opacity: 5%;
+  }
+  100% {
+    transform: rotate(-180deg) translate(-50%, -50%) translate(-3rem, 1.2rem) scale(0.6);
+    opacity: 0%;
+    filter: hue-rotate(10deg);
+  }
+}
+@keyframes move6 {
+  0% {
+    transform: rotate(-240deg) translate(-50%, -50%) translate(0rem, 0.3rem) scale(0.75);
+    opacity: 30%;
+    filter: hue-rotate(10deg);
+  }
+  50% {
+    transform: rotate(-10deg) translate(-50%, -50%) translate(0.2rem, 0.4rem) scale(0.4);
+    opacity: 50%;
+    filter: hue-rotate(30deg);
+  }
+  100% {
+    transform: rotate(-240deg) translate(-50%, -50%) translate(0rem, 0.3rem) scale(0.75);
+    opacity: 30%;
+    filter: hue-rotate(10deg);
+  }
+}
+
+// fireflies
+.firefly-f {
+  opacity: 20%;
+  animation: submove6 31s infinite;
+  animation: move6 61s infinite;
+}
+@keyframes submove6{
+  0% {
+    margin: 0;
+  }
+  20%{
+    margin-left: -0.2rem;
+    margin-top: -0.1rem;
+  }
+  40%{
+    margin-left: -0.1rem;
+    margin-top: 0.2rem;
+  }
+  60%{
+    margin-left: -0.3rem;
+    margin-top: 0.2rem;
+  }  
+  80%{
+    margin-left: 0.275rem;
+    margin-top: -0.13rem;
+  }  
+  100%{
+    margin: 0;
+  }
+}
+@keyframes move6 {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(1.2);
+  }
+  25% {
+    transform: translate(-50%, -50%) translate(-0.7rem, 0.8rem) scale(1.75);
+    filter: hue-rotate(-16.41deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) translate(-1rem, -0.4rem) scale(0.7);
+  }
+  90% {
+    transform: translate(-50%, -50%) translate(0.2rem, 1rem) scale(1.4);
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(1.2);
+  }
+}
+.firefly-g {
+  opacity: 25%;
+  animation: submove7 43s infinite;
+  animation: move7 85s infinite;
+}
+@keyframes submove7{
+  0% {
+    margin: 0;
+  }
+  13%{
+    margin-left: 0.1rem;
+    margin-top: 0.3rem;
+  }
+  20%{
+    margin-left: -0.4rem;
+    margin-top: 0.2rem;
+  }
+  33%{
+    margin-left: -0.2rem;
+    margin-top: 0.7rem;
+  }  
+  49%{
+    margin-left: -0.4rem;
+    margin-top: 0.2rem;
+  }
+  59%{
+    margin-left: -0.7rem;
+    margin-top: -0.4rem;
+  }  
+  74%{
+    margin-left: 0.3rem;
+    margin-top: -0.2rem;
+  }    
+  100%{
+    margin: 0;
+  }
+}
+@keyframes move7{
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.9);
+  }
+  17% {
+    transform: translate(-50%, -50%) translate(-0.7rem, 1rem) scale(1);
+  }
+  33% {
+    transform: translate(-50%, -50%) translate(-1.2rem, -0.4rem) scale(0.65);
+  }
+  62% {
+    transform: translate(-50%, -50%) translate(0.2rem, 1.2rem) scale(1.2);
+    filter: hue-rotate(-16.41deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.9);
+  }
+}
+.firefly-h {
+  opacity: 30%;
+  animation: submove8 8s infinite;
+  animation: move8 8s infinite;
+}
+@keyframes submove8{
+  0% {
+    margin: 0;
+  }
+  20%{
+    margin-left: 0.1rem;
+    margin-top: 0.05rem;
+  }
+  40%{
+    margin-left: 0.15rem;
+    margin-top: -0.2rem;
+  }
+  60%{
+    margin-left: -0.1rem;
+    margin-top: -0.22rem;
+    filter: hue-rotate(-16.41deg);
+  }  
+  80%{
+    margin-left: -0.08rem;
+    margin-top: -0.2rem;
+  }  
+  100%{
+    margin: 0;
+  }
+}
+@keyframes move8{
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.4);
+  }
+  25% {
+    transform: translate(-50%, -50%) translate(-0rem, 0rem) scale(0.3);
+  }
+  90% {
+    transform: translate(-50%, -50%) translate(0rem, 0rem) scale(0.2);
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.4);
+  }
+}
+.firefly-i {
+  opacity: 40%;
+  animation: submove9 6s infinite;
+  animation: move9 11s infinite;
+}
+@keyframes submove9{
+  0% {
+    margin: 0;
+  }
+  20%{
+    margin-left: -0.2rem;
+    margin-top: -0.1rem;
+  }
+  40%{
+    margin-left: 0.1rem;
+    margin-top: 0.3rem;
+  }
+  60%{
+    margin-left: -0.4rem;
+    margin-top: -0.2rem;
+  }  
+  80%{
+    margin-left: -0.13rem;
+    margin-top: 0.08rem;
+    filter: hue-rotate(-16.41deg);
+  }  
+  100%{
+    margin: 0;
+  }
+}
+@keyframes move9{
+  0% {
     transform: translate(-50%, -50%) translate(0, 0) scale(0.38);
   }
   45% {
@@ -505,62 +846,28 @@ p {
   }
 }
 
-.firefly-e {
-  opacity: 50%;
-  animation: submove5 3s infinite;
-  animation: move5 7s infinite;
-}
-@keyframes submove5{
-  0% {
-    margin: 0;
-  }
-  20%{
-    margin-left: 0.4rem;
-    margin-top: -1rem;
-  }
-  40%{
-    margin-left: -0.8rem;
-    margin-top: -0.2rem;
-  }
-  60%{
-    margin-left: 0.1rem;
-    margin-top: 0.4rem;
-  }  
-  80%{
-    margin-left: 0.5rem;
-    margin-top: 0.7rem;
-  }  
-  100%{
-    margin: 0;
-  }
-}
-@keyframes move5 {
-  0% {
-    transform: translate(-50%, -50%) translate(0, 0) scale(0.15);
-  }
-  45% {
-    transform: translate(-50%, -50%) translate(1.4rem, -0.8rem) scale(0.2);
-  }
-  55% {
-    transform: translate(-50%, -50%) translate(0.7rem, 2rem) scale(0.23);
-  }
-  75% {
-    transform: translate(-50%, -50%) translate(-0.3rem, 1rem) scale(0.23);
-  }
-  100% {
-    transform: translate(-50%, -50%) translate(0, 0) scale(0.15);
-  }
-}
 
 
-$i: 281;
-@for $i from 0 through $i { 
+//iterate through background insects
+// $fireflyCount: 101;
+$fireflyCount: 139;
+@for $i from 0 through $fireflyCount { 
   .firefly-#{$i} { 
     top: (random(95) + 5) * 1vh;
     left: (random(105)-2.5) * 1vw; 
-    animation-delay: -1s + ($i % 3);
+    animation-delay: -20s + ($i % 8) + ($i % 8);
     animation-duration: 10s + ($i % 8), 2s + ($i % 3);
   } 
+}
+
+
+@include bp(max-square) {
+  @for $j from 0 through floor($fireflyCount * 0.333333334) {
+    $i: $j * 3;
+    .firefly-#{$i} { 
+      display: none;
+    } 
+  }
 }
 
 </style>
