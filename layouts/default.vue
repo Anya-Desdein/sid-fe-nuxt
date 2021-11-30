@@ -6,13 +6,14 @@
     <div class="bg-gradient"></div>
     <div class="bg-img">
       <div class="container"> 
-        <img src="~assets/img/Background_v32_blurred.png" alt="background image">
+        <img src="~assets/img/Background_v33_blurred.png" alt="background image">
         <img src="~assets/img/kokeshi_eyes4.png" alt="background eyes" class="eyes">
       </div>
     </div>
-    <div class="bg-fireflies">
+    <Fireflies />
+    <!-- <div class="bg-fireflies">
       <div v-for="(el, i) in elements" :key="i" :class="el" ><div class="firefly-inner"></div></div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -864,7 +865,7 @@ $fireflyCount: 139;
   .firefly-#{$i} { 
     top: (random(95) + 5) * 1vh;
     left: (random(105)-2.5) * 1vw; 
-    animation-delay: -20s + ($i % 8) + ($i % 8);
+    animation-delay: -20s + ($i % 8)*2;
     animation-duration: 10s + ($i % 8), 2s + ($i % 3);
   } 
 }
