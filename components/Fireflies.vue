@@ -10,15 +10,75 @@ import BezierEasing from 'bezier-easing';
 import lcm from 'compute-lcm';
 
 class FireflyRenderer {
-  constructor(canvas) {
+  constructor(canvas, frameGenerator) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
+    this.frameGenerator = frameGenerator;
     this.destroyed = false;
     this.currentFrame = 0;
+    this.fps = 12;
+    this.nextFrameTimeout = null;
   }
 
   destroy() {
     this.destroyed = true;
+  }
+
+  play(fps = undefined) {
+    if(fps !== undefined) {
+      this.fps = fps;
+    }
+    if(!(this.fps >= 0.01)) {
+      throw "Invalid FPS";
+    }
+    this.setNextFrameTimeout();
+  }
+
+  setNextFrameTimeout(elapsed = false) {
+    if(!elapsed && this.nextFrameTimeout !== null) {
+      window.clearTimeout(this.nextFrameTimeout);
+    }
+    let time = 1000 / this.fps;
+    if(typeof elapsed === "number") {
+      time -= elapsed;
+    }
+    if(time < 1) time = 1;
+    this.nextFrameTimeout = window.setTimeout(() => {
+      if(this.destroyed) return;
+      this.renderNextFrame()
+    }, time);
+  }
+
+  async renderNextFrame() {
+    const renderStart = performance.now();
+    try {
+      const frame = await this.frameGenerator(this.fps);
+      const ctx = this.ctx;
+      const { width, height } = this.canvas;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = 'green';
+      ctx.strokeStyle = 'red';
+      ctx.strokeRect(20, 10, 160, 100);
+      for(let obj of frame) {
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        const { rotate, startPosX, startPosY, translate, scale, opacity, hue, saturate } = obj;
+        const translateScale = 40;
+        const size = scale * 8; 
+        const cx = translate[0] * translateScale + size/2;
+        const cy = translate[1] * translateScale + size/2;
+        ctx.globalAlpha = opacity / 100;
+        ctx.filter = `hue-rotate(${hue}deg) saturate(${saturate})`;
+        ctx.translate(startPosX * width, startPosY * height);
+        ctx.translate(cx, cy);
+        ctx.rotate(rotate / 180 * Math.PI);
+        ctx.translate(-cx, -cy);
+        ctx.fillRect(cx - size/2, cy - size/2, size, size);
+      }
+    } finally {
+      const renderDuration = performance.now() - renderStart;
+      this.setNextFrameTimeout(renderDuration);
+    }
   }
 }
 
@@ -26,7 +86,7 @@ class FireflyAnimator {
   constructor() {
     this.preset = [];
     this.destroyed = false;
-    this.styleDefaults = { rotate: 0, translate: [0, 0], scale: 1, opacity: 100, hue: 0, saturate: 1 };
+    this.styleDefaults = { rotate: 0, startPosX: 0, startPosY: 0, translate: [0, 0], scale: 1, opacity: 100, hue: 0, saturate: 1 };
           
     const easingFunction = BezierEasing(1, 0.08, 0, 0.92);
 
@@ -76,20 +136,31 @@ class FireflyAnimator {
           ],
         ],
       },
+      'firefly-test': {
+        frames: butterflyFrames,
+        animations: [
+          [
+            { percent: 0, rotate: 0, translate: [1, 0], scale: 2, opacity: 40,   hue: 0, saturate: 1 },
+            { percent: 15, rotate: 0, translate: [2, 0], scale: 1, opacity: 40,   hue: 0, saturate: 0 },
+            { percent: 30, rotate: 0, translate: [3, 0], scale: 1, opacity: 40,   hue: 0, saturate: 1 },
+            { percent: 45, rotate: 0, translate: [4, 0], scale: 1, opacity: 40,   hue: 180, saturate: 1 },
+            { percent: 60, rotate: 0, translate: [5, 0], scale: 1, opacity: 0,   hue: 0, saturate: 1 },
+            { percent: 75, rotate: 0, translate: [6, 0], scale: 1, opacity: 100,   hue: 0, saturate: 1 },
+            { percent: 90, rotate: 0, translate: [8, 0], scale: 3, opacity: 40,   hue: 0, saturate: 1 },
+            { percent: 100, rotate: 0, translate: [12, 0], scale: 1, opacity: 40,   hue: 0, saturate: 1 },
+          ],
+        ],
+      },
     }).map(([k, { frames, animations }]) => {
       return [k, { 
         frames, 
         animations: animations.map(anim => {
-          let rate = null;
           return anim.map((step, stepNumber) => {
-            if('rate' in step) {
-              rate = step.rate;
-            }
             const ret = {};
             Object.entries(step).forEach(([prop, value]) => {
               if(value !== undefined && value !== null) {
                 ret[prop] = value;
-                console.log("step " + stepNumber, "SET ", prop, "=", ret[prop])
+                // console.log("step " + stepNumber, "SET ", prop, "=", ret[prop])
               }
             });
             Object.entries(this.styleDefaults).forEach(([prop]) => {
@@ -97,15 +168,15 @@ class FireflyAnimator {
                 const reverseAnim = [...anim].reverse();
                 const prevIdx = reverseAnim.findIndex((v, i) => (i > anim.length - stepNumber - 1) && prop in v && v[prop] !== null);
                 const nextIdx = anim.findIndex((v, i) => (i > stepNumber) && prop in v && v[prop] !== null);
-                const prev = prevIdx >= 0 ? reverseAnim[prevIdx] : { percent: 0, ...this.styleDefaults };
-                const next = nextIdx >= 0 ? anim[nextIdx] : { percent: 100, ...this.styleDefaults };
+                const prev = prevIdx >= 0 ? reverseAnim[prevIdx] : { percent: 0, ...this.styleDefaults, translate: [0, 0] };
+                const next = nextIdx >= 0 ? anim[nextIdx] : { percent: 100, ...this.styleDefaults, translate: [0, 0] };
                 const prevPercent = prev.percent / 100;
                 const nextPercent = next.percent / 100;
                 const prevValue = prev[prop];
                 const nextValue = next[prop];
                 const currentPercent = step.percent / 100;
                 const t = (currentPercent - prevPercent) / (nextPercent - prevPercent);
-                const currentRatio = easingFunction(t);
+                const currentRatio = t; // easingFunction(t);
                 ret[prop] = prevValue * (1-currentRatio) + nextValue * currentRatio;
                 console.log("step " + stepNumber, "GEN ", prop, "=", ret[prop], " ", t+"t", currentRatio+"ratio", prevPercent*100+"%-"+nextPercent*100+"%", prevValue+"-"+nextValue);
               }
@@ -120,15 +191,15 @@ class FireflyAnimator {
   }
 
   calculateStyle(type, frame, progress) {
-    console.log("calculate style",type, frame, progress);
+    // console.log("calculate style",type, frame, progress);
     const { frames, animations } = this.styles[type];
     const ret = {
       file: frames[frame % frames.length],
-      ...this.styleDefaults
+      ...this.styleDefaults, translate: [0, 0]
     };
 
     for(let anim of animations) {
-      const bIdx = anim.findIndex(x => x.percent >= progress);
+      const bIdx = anim.findIndex(x => x.percent > progress * 100);
       if(bIdx < 0) {
         debugger;
         throw "Invalid animation";
@@ -136,7 +207,7 @@ class FireflyAnimator {
       const aIdx = bIdx == 0 ? 0 : bIdx - 1;
       const a = anim[aIdx];
       const b = anim[bIdx];
-      const t = (progress - a.percent) / (b.percent - a.percent);
+      const t = (progress * 100 - a.percent) / (b.percent === a.percent ? 1 : b.percent - a.percent);
       const ti = 1 - t;
 
       ret.rotate += a.rotate * ti + b.rotate * t;
@@ -176,13 +247,22 @@ class FireflyAnimator {
       for(let i = 0; i < count; i++) {
         const t = this.calculateElementAnimationTime(time, elementIdx);
         const duration = this.calculateElementAnimationDuration(elementIdx);
-        const progress = t / duration;
+        const progress = (t / duration) % 1;
         if((time / duration) >= 1) {
           objects[elementIdx].finished = true;
+          debugger;
           continue;
         }
         const style = this.calculateStyle(type, currentFrame, progress);
-        if(!objects[elementIdx]) objects[elementIdx] = { finished: false, frames: [] };
+        if(!objects[elementIdx]) {
+          objects[elementIdx] = { 
+            finished: false, 
+            frames: [], 
+            startPos: [Math.random()*0.95+0.05, Math.random()*1.05-0.025]
+          };
+        }
+        style.startPosX = objects[elementIdx].startPos[0];
+        style.startPosY = objects[elementIdx].startPos[1];
         objects[elementIdx].frames.push(style);
         elementIdx++;
         added = true;
@@ -192,7 +272,9 @@ class FireflyAnimator {
   }
 
   generateFrame(data, time) {
+    const start = new Date();
     const frame = [];
+    // debugger;
     if(!data.finished) {
       if(!this.generateObjects(data, time)) {
         data.finished = true;
@@ -201,6 +283,8 @@ class FireflyAnimator {
     for(let obj of data.objects) {
       frame.push(obj.frames[data.currentFrame % obj.frames.length]);
     }
+    const end = new Date();
+    console.log("Generating frame took ", (end - start));
     return frame;
   }
 
@@ -215,7 +299,7 @@ class FireflyAnimator {
     new Promise(async () => {
       while (!this.destroyed) {
         if(frames.length >= 2) {
-          await new Promise(r => setTimeout(r, frames.length * 10));
+          await new Promise(r => setTimeout(r, 1 + frames.length * 5));
           if(frames.length > 10) {
             continue;
           }
@@ -231,6 +315,7 @@ class FireflyAnimator {
         await new Promise(r => setTimeout(r, 1)); // todo: clean up using promises 
         val = frames.shift();
       }
+      console.log("Got frame, left in buffer:", frames.length);
       return val;
     };
   }
@@ -245,22 +330,46 @@ export default {
   },
   async mounted() {
     this.resizeCanvas();
-    const canvas = this.$refs.firefliesCanvas;
-    this.renderer = new FireflyRenderer(canvas);
-    this.animator = new FireflyAnimator();
-
     window.addEventListener('resize', this.windowResizeHandler);
 
+    this.animator = new FireflyAnimator();
     this.animator.setPreset([
-        [3, 'firefly-a'], 
-        [6, 'firefly-b'], 
-        // [9, 'firefly-c'], 
+        // [1, 'firefly-test'], 
+        [40, 'firefly-a'], 
+        [15, 'firefly-b'], 
     ])
 
-    const frameGenerator = this.animator.frameGenerator();
-    for(let i = 0; i < 100; i++) {
-      console.log("Got frame", await frameGenerator());
-    }
+    const fps = 30;
+    const frameGenerator = this.animator.frameGenerator(fps);
+
+    const canvas = this.$refs.firefliesCanvas;
+
+    this.renderer = new FireflyRenderer(canvas, frameGenerator);
+    this.renderer.play(fps);
+
+    // // performance tests
+    // const frameGenerator = this.animator.frameGenerator();
+    // this.animator.setPreset([
+    //     [1500, 'firefly-a'], 
+    //     [500, 'firefly-b'], 
+    //     // [9, 'firefly-c'], 
+    // ])
+    // for(let i = 0; i < 150; i++) {
+    //   await new Promise(r => setTimeout(r, 1000 / 30));
+    //   console.log(i);
+    //   await frameGenerator();
+    // }
+    // for(let i = 0; i < 250; i++) {
+    //   await new Promise(r => setTimeout(r, 1000 / 60));
+    //   console.log(i);
+    //   await frameGenerator();
+    // }
+    // for(let i = 0; i < 50; i++) {
+    //   await new Promise(r => setTimeout(r, 1000 / 8)); 
+    //   console.log(i);
+    //   await frameGenerator();
+    // }
+
   },
   methods: {
     resizeCanvas() {
