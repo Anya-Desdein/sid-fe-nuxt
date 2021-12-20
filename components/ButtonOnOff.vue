@@ -1,9 +1,9 @@
 <template>
   <div class="button-on-off" :class="{'button-on-off--on': state}" @click="clicked">
     <div class="button-on-off__slider">
-      <div class="off">Auto</div>
+      <div class="off">{{labelTrue}}</div>
       <div class="button-on-off__knob"></div>
-      <div class="on">Manual</div>
+      <div class="on">{{labelFalse}}</div>
     </div>
   </div>
 </template>
@@ -12,6 +12,8 @@
 export default {
   props: {
     state: Boolean,
+    labelTrue: String,
+    labelFalse: String
   },
   methods: {
     clicked() {
