@@ -5,7 +5,6 @@
       <div class="button-on-off__knob"></div>
       <div class="on">Manual</div>
     </div>
-    <div class="gradient"></div>
   </div>
 </template>
 
@@ -25,23 +24,23 @@ export default {
 <style scoped lang="scss">
 
 $label: 3.8rem;
-$knob: 3.8rem;
 $border: .0625rem;
 
 .button-on-off {
-  height: 1.6rem;
-  width: $border + $label + $knob + $border;
+  height: 1.8rem;
+  width: $label + $border + $border + $label;
   overflow: hidden;
-  border: $border solid #BEAC8F;
-  border-radius: 0.75rem;
+  border: $border solid $color-primary;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  user-select: none;
 }
 
 .button-on-off__slider {
   height: 100%;
-  width: $label + $border + $knob + $border + $label;
   display: flex;
   overflow: hidden;
-  // position:relative;
+  position: relative;
 }
 
 .button-on-off__slider > * {
@@ -49,31 +48,53 @@ $border: .0625rem;
   width: $label;
   z-index: 200;
   box-sizing: content-box;
+  position: relative;
 }
 
-.button-on-off__slider {
-  transition: 0.15s transform ease-out;
-  transform: translateX(0);
+.button-on-off .off {
+   color: $color-text-inactive;
+}
+.button-on-off .on {
+   color: $color-primary;
+}
 
-  .button-on-off--on & {
-    transform: translateX(-$label);
-  }
+.button-on-off--on .on {
+ color: $color-text-inactive; 
+} 
+
+.button-on-off--on .off{
+  color: $color-primary;
+}
+
+.button-on-off__slider > .off, .button-on-off__slider > .on {
+  padding-top: 0.18rem;
 }
 
 .button-on-off__slider > .button-on-off__knob {
-  height: 1.6rem - $border * 2;
-  width: $knob;
-  border: $border solid #BEAC8F;
-  border-radius: 0.75rem;
+  position: absolute;
+  top:0;
+  left:50%;
+  height: 1.8rem - $border * 2;
+  width: $label;
+  border: $border solid $color-primary;
+  border-radius: 0.8rem;
   margin: -$border;
+  transition: 0.18s transform ease-out;
+  z-index: -19;
+  overflow: hidden;
+  .button-on-off--on & {
+    transform: translateX(-100%);
+  }
 }
-
-.gradient {
-  height: 2.4rem;
-  transform: translateY(-2rem);
-  background-image: radial-gradient(#9B2948, #231420);
-  opacity: 0.6;
-  z-index: -1;
+.button-on-off__slider > .button-on-off__knob:after{
+  content: "";
+  display: block;
+  height: 2.6rem;
+  background-image: radial-gradient($color-secondary, $color-background);
   position: relative;
+  transform: translateY(-0.7rem);
+  z-index: -20;
+  border-radius: 0.8rem;
+  opacity: 0.5;
 }
 </style>

@@ -217,7 +217,7 @@ html { font-size: 2.962962963vw; }
 }
 
 /* Dev start */
-html { font-size: 32px !important; } 
+// html { font-size: 32px !important; } 
 /* Dev end */
 
 .container {

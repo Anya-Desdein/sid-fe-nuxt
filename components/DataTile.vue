@@ -2,7 +2,7 @@
 
 <template>
  <div class="data-tile">
-  <Button2></Button2>
+  <DashboardTile></DashboardTile>
  </div>
 </template>
 
