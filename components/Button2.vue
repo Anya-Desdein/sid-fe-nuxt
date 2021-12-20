@@ -3,9 +3,7 @@
 <template>
   <Tile>
     <h2>Nazwa urządzenia - nazwa pokoju</h2>
-
-    sdsadssa
-    <button-on-off title="asd" :state="tileState" @click="tileState = !tileState"></button-on-off>
+    <button-on-off :state="tileState" @click="tileState = !tileState"></button-on-off>
     <div class="state">
       Stan: 
       <span> {{ tileState ? 'Włączony' : 'Wyłączony' }} </span>

@@ -1,3 +1,5 @@
+/*  nic nie robi */
+
 <template>
  <div class="dynamic-tile">
    <h2 v-if="heading">{{heading}}</h2>

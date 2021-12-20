@@ -1,3 +1,5 @@
+/*  nic nie robi */
+
 <template>
  <div class="tileList">
    <tile-on-off></tile-on-off>

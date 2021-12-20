@@ -10,7 +10,7 @@
         <img src="~assets/img/glowing_eyes5.png" alt="background eyes" class="eyes">
       </div>
     </div>
-    <Fireflies />
+    <!-- <Fireflies /> -->
     <!-- <div class="bg-fireflies">
       <div v-for="(el, i) in elements" :key="i" :class="el" ><div class="firefly-inner"></div></div>
     </div> -->
@@ -217,7 +217,7 @@ html { font-size: 2.962962963vw; }
 }
 
 /* Dev start */
-/* html { font-size: 32px !important; } */
+html { font-size: 32px !important; } 
 /* Dev end */
 
 .container {

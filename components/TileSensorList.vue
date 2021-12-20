@@ -1,3 +1,5 @@
+/*  nic nie robi */
+
 <template>
   <Tile>
     <h2>Obecne Pomiary</h2>

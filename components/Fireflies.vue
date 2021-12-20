@@ -321,15 +321,17 @@ class FireflyAnimator {
   }
 }
 
+
 export default {
   data() {
     return {
       renderer: null,
-      windowResizeHandler: () => this.resizeCanvas(),
+      windowResizeHandler: this.resizeCanvas.bind(this),
     };
   },
   async mounted() {
     this.resizeCanvas();
+
     window.addEventListener('resize', this.windowResizeHandler);
 
     this.animator = new FireflyAnimator();

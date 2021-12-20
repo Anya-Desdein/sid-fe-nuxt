@@ -1,6 +1,8 @@
+/* stylowanie kafelków */
+
 <template>
  <div class="data-tile">
-   <slot />
+  <Button2></Button2>
  </div>
 </template>
 
