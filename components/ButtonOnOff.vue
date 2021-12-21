@@ -30,6 +30,7 @@ $border: .0625rem;
 
 .button-on-off {
   height: 1.8rem;
+  text-align: center;
   width: $label + $border + $border + $label;
   overflow: hidden;
   border: $border solid $color-primary;
