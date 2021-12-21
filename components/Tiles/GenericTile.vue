@@ -31,8 +31,4 @@ export default {
     overflow: hidden;
     white-space: nowrap;
   }
-
-  p {
-    margin-left: 0.71rem;
-  }
 </style>

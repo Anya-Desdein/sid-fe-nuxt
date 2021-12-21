@@ -24,9 +24,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+  .tile-content > * {
+    margin-bottom: 0.5rem;
+  }
+
   @include bp(max-square) {
    .tile-content > * {
-      margin-bottom: 0.5rem;
       margin-left: auto;
       margin-right: auto;
    }

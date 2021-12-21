@@ -25,7 +25,6 @@ export default {
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: 1fr;
   gap: 1em 1em;
-  margin: 1em 0em;
   grid-auto-flow: row;
 }
 
