@@ -2,30 +2,66 @@
   <div>
     <PageHeading title="Obecne dane">Ostatnia aktualizacja: 18:20</PageHeading>
     <div class="container page-container"> 
-      <!-- <breakpoint-test /> -->
       <AppGrid>
-        <div><DataTile><h2>Temperatura rara rarara 1</h2><p>Pokój 1: 123</p><p>Pokój 2: 234</p></DataTile></div>
-        <div><DataTile><h2>Temperatura 2</h2><p>Pokój 1: 123</p><p>Pokój 2: 234</p><p>Pokój 3: 55</p></DataTile></div>
-        <div><DataTile><h2>Temperatura 3</h2><p>Pokój 1: 123</p><p>Pokój 2: 234</p><p>Pokój 3: 55</p></DataTile></div>
-        <div><DataTile><h2>Temperatura 4</h2><p>Pokój 1: 123</p><p>Pokój 2: 234</p><p>Pokój 3: 55</p></DataTile></div>
-        <div><DataTile><h2>Temperatura 5</h2><p>Pokój 1: 123</p><p>Pokój 2: 234</p><p>Pokój 3: 55</p></DataTile></div>
-        <div><DataTile><h2>Temperatura 6</h2><p>Pokój 1: 123</p><p>Pokój 2: 234</p><p>Pokój 3: 55</p></DataTile></div>
-        <div><DataTile><h2>Temperatura 7</h2><p>Pokój 1: 123</p><p>Pokój 2: 234</p><p>Pokój 3: 55</p></DataTile></div>
-        <div><DataTile><h2>Temperatura 8</h2><p>Pokój 1: 123</p><p>Pokój 2: 234</p><p>Pokój 3: 55</p></DataTile></div>
+        <div v-for="tile in tiles" :key="tile.id">
+          <GenericTile :tileType="tile.tileType" :tileData="tile.tileData"></GenericTile>
+        </div>
       </AppGrid>
-
-
     </div>
   </div>
 </template>
 
 <script>
-import BreakpointTest from '../components/BreakpointTest.vue';
-import TileList from '../components/TileList.vue';
 export default {
-  components: { TileList, BreakpointTest },
   data() {
     return {
+      tiles: [
+        {
+          id: 1,
+          tileType: 'ListingTile',
+          tileData: {
+            sensorIds: [32348, 23974, 10283]
+          }
+        },
+        {
+          id: 2,
+          tileType: 'ListingTile',
+          tileData: {
+            sensorIds: [123, 234, 345, 231]
+          }
+        },
+        {
+          id: 3,
+          tileType: 'ControlTile',
+          tileData: { sensorId: 123 }
+        },
+        {
+          id: 4,
+          tileType: 'ControlTile',
+          tileData: { sensorId: 123 }
+        },
+        // 4
+        {
+          id: 5,
+          tileType: 'ControlTile',
+          tileData: { sensorId: 123 }
+        },
+        {
+          id: 6,
+          tileType: 'ControlTile',
+          tileData: { sensorId: 123 }
+        },
+        {
+          id: 7,
+          tileType: 'ControlTile',
+          tileData: { sensorId: 123 }
+        },
+        {
+          id: 8,
+          tileType: 'ControlTile',
+          tileData: { sensorId: 123 }
+        },
+      ]
     };
   },
   methods: {

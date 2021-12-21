@@ -7,7 +7,7 @@
 <style lang="scss" scoped>
 .app-grid {
   display: grid;
-  gap: 3rem 1rem;
+  gap: 1.5rem 2.5rem;
   // change gap in sqare and mobile
   grid-auto-flow: row;
   grid-auto-rows: 1fr;
@@ -17,7 +17,14 @@
     "c5 c6 c7 e c8";
 
   @include bp(max-square) {
-    gap: 4rem 1rem;
+    .dashboard-tile {
+      border-bottom: none;
+    }
+  }
+
+  @include bp(max-square) {
+    margin-top: 1rem;
+    gap: 4rem 2rem;
     grid-template-areas:   
       "c1 c2 c3"   
       "c4  e c5"
@@ -25,6 +32,7 @@
   }
 
   @include bp(max-portrait) {
+    gap: 4rem 1rem;
     grid-template-areas:   
       "e  c2 f "   
       "c1 c2 c3"   
@@ -45,5 +53,14 @@
   & > *:nth-child(7) { grid-area: c7; }
   & > *:nth-child(8) { grid-area: c8; }
 
+  @include bp(min-landscape) {
+  & > *:nth-child(1),
+  & > *:nth-child(2),
+  & > *:nth-child(3),
+  & > *:nth-child(4) {
+    padding-bottom: 1.4rem;
+    border-bottom: $border;
+  }
+  }
 }
 </style>

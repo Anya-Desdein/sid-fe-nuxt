@@ -70,9 +70,18 @@ export default {
   position: fixed;
   z-index: -100;
   top:4rem;
-  left:0;
+  left:3rem;
   right:0;
   
+  @include bp(max-square) {
+      left:2rem;
+  }
+
+  @include bp(max-portrait) {
+      left:1.8rem;
+  }
+
+
   .eyes {
     opacity: 0%;
     animation: eye-glow 24s infinite;
@@ -144,6 +153,22 @@ export default {
 
 <style lang="scss">
 
+@mixin text-selection{
+  color: $color-black;
+  background: #EC3F6E; 
+  text-shadow: 
+    $color-secondary 0 0 0.10rem, 
+    $color-secondary 0 0 0.15rem,
+    transparentize( $color-secondary, 0.8) 0 0 3rem;
+}
+::-moz-selection { 
+  @include text-selection;
+}
+::selection { 
+    @include text-selection;
+}
+
+
 @font-face {
   font-family: 'MingLiU_PLBBL_MIN2';
   src: url('~assets/fonts/MingLiU_PLBBL_MIN2.ttf') format('truetype'),
@@ -163,6 +188,7 @@ html {
   // font-family: 'MingLiU_PLBBL_MIN2', monospace;
   color: $color-text;
   background-color: $color-background;
+
 }
 
 body {

@@ -70,7 +70,7 @@ $border: .0625rem;
 }
 
 .button-on-off__slider > .off, .button-on-off__slider > .on {
-  padding-top: 0.18rem;
+  padding-top: 0.2rem;
 }
 
 .button-on-off__slider > .button-on-off__knob {
