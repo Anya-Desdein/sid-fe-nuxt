@@ -1,8 +1,8 @@
 <template>
   <div class="dynamic-tile">
     <TileHeading>{{heading}}</TileHeading>
-    <div class="dynamic-tile__lines" v-if="lines && lines.length">
-      <p v-for="line in lines" :key="line.id">{{line.label}}: {{line.value}}</p>
+    <div class="dynamic-tile__lines" v-if="sensors && sensors.length">
+      <p v-for="sensor in sensors" :key="sensor.id">{{sensor.displayName}}: {{sensor.latestValue}}</p>
     </div>
   </div>
 </template>
@@ -15,14 +15,25 @@ export default {
   data() {
     return {
       heading: 'Loading...',
-      lines: [],
+      sensors: [],
     }
   },
   async fetch() {
-    setTimeout(() => {
-      this.heading = "Loaded!"
-      this.lines = this.tileData.sensorIds.map(id => ({id, label: id, value: ~~(Math.random() * 100)}))
-    }, 500);
+    const url = `http://localhost:3030/api/get-sensor-list/` + this.tileData.sensorIds.join(',');
+    
+    const data = await this.$axios.$get(url);
+    if(!data.sensors) {
+      throw "Can't load sensors!";
+    }
+
+    this.heading = "Loaded!";
+
+    this.sensors = data.sensors;
+
+    // setTimeout(() => {
+    //   // ~~ to podwójna negacja bitowa i działa jak math floor 
+    //   this.lines = this.tileData.sensorIds.map(id => ({id, label: id, value: ~~(Math.random() * 100)}))
+    // }, 500);
   }
 }
 </script>

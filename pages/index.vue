@@ -20,14 +20,14 @@ export default {
           id: 1,
           tileType: 'ListingTile',
           tileData: {
-            sensorIds: [32348, 23974, 10283]
+            sensorIds: ['SENS-TEST-3H', 'SENS-TEST-2T']
           }
         },
         {
           id: 2,
           tileType: 'ListingTile',
           tileData: {
-            sensorIds: [123, 234, 345, 231]
+            sensorIds: ['SENS-TEST-1T', 'SENS-TEST-2T', 'SENS-TEST-3H']
           }
         },
         {
