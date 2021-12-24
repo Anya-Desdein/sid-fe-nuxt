@@ -27,6 +27,10 @@ export default {
 
   .tile-content > * {
     margin-bottom: 0.5rem;
+    -webkit-user-select: none; 
+    -moz-user-select: none;     
+    -ms-user-select: none;  
+    user-select: none;  
   }
 
   @include bp(max-square) {

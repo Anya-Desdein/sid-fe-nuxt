@@ -4,12 +4,6 @@
     <div class="dynamic-tile__lines" v-if="lines && lines.length">
       <p v-for="line in lines" :key="line.id">{{line.label}}: {{line.value}}</p>
     </div>
-    <!-- <ul>
-        <li>Pokój A: 32C</li>
-        <li>Pokój B: 28C</li>
-        <li>Pokój A: 50% RH</li>
-        <li>Pokój B: 90% RH</li>
-      </ul> -->
   </div>
 </template>
 
@@ -34,13 +28,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  h2 {
-    margin-bottom: 0.475rem;
-  }
-  p, h2 {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-  }
 
 </style>

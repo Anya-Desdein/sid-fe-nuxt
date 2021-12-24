@@ -32,15 +32,20 @@ export default {
         },
         {
           id: 3,
-          tileType: 'ControlTile',
-          tileData: { sensorId: 123 }
+          tileType: 'ChartTile',
+          tileData: {
+            sensorIds: [2, 3],
+            startDate: new Date('2021-12-24T10:00:00'),
+            endDate: new Date('2021-12-26T010:00:00'),
+            preferredPointCount: 10,
+          }
         },
         {
           id: 4,
           tileType: 'ControlTile',
           tileData: { sensorId: 123 }
         },
-        // 4
+
         {
           id: 5,
           tileType: 'ControlTile',

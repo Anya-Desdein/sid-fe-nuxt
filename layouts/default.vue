@@ -71,7 +71,8 @@ export default {
   z-index: -100;
   top:4rem;
   left:3rem;
-  right:0;
+  right:0; 
+  user-select: none;  
   
   @include bp(max-square) {
       left:2rem;
