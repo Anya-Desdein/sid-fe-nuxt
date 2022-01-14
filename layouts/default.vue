@@ -7,7 +7,7 @@
     <div class="bg-img">
       <div class="container"> 
         <img src="~assets/img/Background_v36_blurred.png" alt="background image">
-        <img src="~assets/img/glowing_eyes5.png" alt="background eyes" class="eyes">
+        <img src="~assets/img/glowing_eyes6.png" alt="background eyes" class="eyes">
       </div>
     </div>
     <!-- <Fireflies /> -->
@@ -95,13 +95,13 @@ export default {
       opacity:0%;
     }
     44% {
-      opacity: 15%;
+      opacity: 35%;
     }
     49% {
-      opacity:73%;
+      opacity:100%;
     }
-    54% {
-      opacity:71%;
+    56% {
+      opacity:99%;
     }  
     58%{
       opacity:0%;
@@ -156,11 +156,11 @@ export default {
 
 @mixin text-selection{
   color: $color-black;
-  background: #EC3F6E; 
+  background: #af1c43; 
   text-shadow: 
-    $color-secondary 0 0 0.10rem, 
-    $color-secondary 0 0 0.15rem,
-    transparentize( $color-secondary, 0.8) 0 0 3rem;
+    $color-secondary-dark 0 0 0.10rem, 
+    $color-secondary-dark  0 0 0.15rem,
+    transparentize( $color-secondary-dark, 0.8) 0 0 3rem;
 }
 ::-moz-selection { 
   @include text-selection;
