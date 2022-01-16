@@ -19,7 +19,7 @@ export default {
     }
   },
   async fetch() {
-    const url = `http://localhost:3030/api/get-sensor-list/` + this.tileData.sensorIds.join(',');
+    const url = `/api/get-sensor-list/` + this.tileData.sensorIds.join(',');
     
     const data = await this.$axios.$get(url);
     if(!data.sensors) {

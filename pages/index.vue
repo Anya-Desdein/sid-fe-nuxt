@@ -34,37 +34,37 @@ export default {
           id: 3,
           tileType: 'ChartTile',
           tileData: {
-            sensorIds: [2, 3],
-            startDate: new Date('2021-12-24T10:00:00'),
-            endDate: new Date('2021-12-26T010:00:00'),
-            preferredPointCount: 10,
+            sensorIds: ['14905677-3', '14905677-4'],
+            startDate: new Date('2022-01-13T10:00:00'),
+            endDate: new Date('2022-01-20T10:00:00'),
+            preferredPointCount: 15,
           }
         },
         {
           id: 4,
           tileType: 'ControlTile',
-          tileData: { sensorId: 123 }
+          tileData: { deviceId: 'PLUG-1' }
         },
 
         {
           id: 5,
           tileType: 'ControlTile',
-          tileData: { sensorId: 123 }
+          tileData: { deviceId: 'PLUG-2' }
         },
         {
           id: 6,
           tileType: 'ControlTile',
-          tileData: { sensorId: 123 }
+          tileData: { deviceId: 'PLUG-1' }
         },
         {
           id: 7,
           tileType: 'ControlTile',
-          tileData: { sensorId: 123 }
+          tileData: { deviceId: 'PLUG-1' }
         },
         {
           id: 8,
           tileType: 'ControlTile',
-          tileData: { sensorId: 123 }
+          tileData: { deviceId: 'PLUG-1' }
         },
       ]
     };
