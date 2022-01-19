@@ -6,8 +6,8 @@
     <div class="bg-gradient"></div>
     <div class="bg-img">
       <div class="container"> 
-        <img src="~assets/img/Background_v36_blurred.png" alt="background image">
-        <img src="~assets/img/glowing_eyes6.png" alt="background eyes" class="eyes">
+        <img src="~assets/img/Background_v37_blurred.png" alt="background image">
+        <img src="~assets/img/glowing_eyes7.png" alt="background eyes" class="eyes">
       </div>
     </div>
     <!-- <Fireflies /> -->
@@ -91,19 +91,16 @@ export default {
     0% {
       opacity:0%;
     }
-    36% {
+    42% {
       opacity:0%;
     }
-    44% {
-      opacity: 35%;
-    }
     49% {
-      opacity:100%;
+      opacity:40%;
     }
-    56% {
-      opacity:99%;
+    53% {
+      opacity:39%;
     }  
-    58%{
+    62%{
       opacity:0%;
     } 
     100%{
