@@ -6,7 +6,7 @@
     <div class="bg-gradient"></div>
     <div class="bg-img">
       <div class="container"> 
-        <img src="~assets/img/Background_v37_blurred.png" alt="background image">
+        <img src="~assets/img/Background_v37_1_blurred.png" alt="background image">
         <img src="~assets/img/glowing_eyes7.png" alt="background eyes" class="eyes">
       </div>
     </div>
