@@ -59,24 +59,39 @@ export default {
           data: {
             datasets: this.graphData,
           },
+          
           options: {
             scales: {
               x: {
                 type: 'time',
                 time: {
                   // Luxon format string
-                  tooltipFormat: 'DD T'
+                  tooltipFormat: 'DD T',
+                  displayFormats: {
+                      millisecond: 'HH:mm:ss.SSS',
+                      second: 'HH:mm:ss',
+                      minute: 'HH:mm',
+                      hour: 'HH'
+                  }
                 },
                 title: {
                   display: false,
                   text: 'Date'
-                }
+                },
+                 grid: {
+                  borderColor: 'transparent', 
+                  display: false
+                },
               },
               y: {
                 title: {
                   display: false,
                   text: 'Temperature'
                 },
+                 grid: {
+                  borderColor: 'transparent', 
+                  display: false
+                }
               },
             },
             plugins: {
@@ -135,46 +150,6 @@ export default {
         }))
       };
     })
-
-    // this.data = [{
-    //   sensorName: 'Pokój A',
-    //   data: [
-    //     { x: new Date('2021-07-26T16:00:00.000Z'), y: 35 },
-    //     { x: new Date('2021-07-26T17:00:00.000Z'), y: 36 },
-    //     { x: new Date('2021-07-26T18:00:00.000Z'), y: 33 },
-    //     { x: new Date('2021-07-26T19:00:00.000Z'), y: 32 },
-    //     { x: new Date('2021-07-26T20:00:00.000Z'), y: 30 }
-    //   ]
-    // },{
-    //   sensorName: 'Pokój B',
-    //   data: [
-    //     { x: new Date('2021-07-26T16:00:00.000Z'), y: 34 },
-    //     { x: new Date('2021-07-26T17:00:00.000Z'), y: 34 },
-    //     { x: new Date('2021-07-26T18:00:00.000Z'), y: 32 },
-    //     { x: new Date('2021-07-26T19:00:00.000Z'), y: 30 },
-    //     { x: new Date('2021-07-26T20:00:00.000Z'), y: 27 },
-    //   ]
-    // },{
-    //   sensorName: 'Pokój B',
-    //   data: [
-    //     { x: new Date('2021-07-26T16:00:00.000Z'), y: 24 },
-    //     { x: new Date('2021-07-26T17:00:00.000Z'), y: 24 },
-    //     { x: new Date('2021-07-26T18:00:00.000Z'), y: 22 },
-    //     { x: new Date('2021-07-26T19:00:00.000Z'), y: 20 },
-    //     { x: new Date('2021-07-26T20:00:00.000Z'), y: 17 },
-    //   ]
-    // },
-    // {
-    //   sensorName: 'Pokój B',
-    //   data: [
-    //     { x: new Date('2021-07-26T16:00:00.000Z'), y: 4 },
-    //     { x: new Date('2021-07-26T17:00:00.000Z'), y: 23 },
-    //     { x: new Date('2021-07-26T18:00:00.000Z'), y: 12 },
-    //     { x: new Date('2021-07-26T19:00:00.000Z'), y: 22 },
-    //     { x: new Date('2021-07-26T20:00:00.000Z'), y: 6 },
-    //   ]
-    // }
-    // ];
 
     this.graphData = this.data.map((obj, i) => ({
       id: i, // todo: replace with id from server

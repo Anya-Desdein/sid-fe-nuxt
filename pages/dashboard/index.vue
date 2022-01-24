@@ -49,9 +49,9 @@ export default {
           tileType: 'ChartTile',
           tileData: { 
             sensorIds: [ sensor.id ],
-            startDate: new Date(new Date() - 1000 * 60 * 60 * 24 * 1),
+            startDate: new Date(new Date() - 1000 * 60 * 60 * 1 * 1),
             endDate: new Date(new Date() + 1000 * 60),
-            preferredPointCount: 15, 
+            preferredPointCount: 5, 
           }
         }
       }),

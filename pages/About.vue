@@ -22,7 +22,6 @@
         <li>Nie należy udostępniać hasła do sieci, które używa system, osobom trzecim.</li>
         <li>Nie powinno się używać systemu na użądzeniu o szerokości ekranu mniejszej niż 450 px, zalecana wartość wynosi minimum 850 px.</li>
       </ul>
-      </p>
       <h3>Instalacja i konfiguracja systemu "Inteligentny Dom"</h3>
       <p>
         Aby poprawnie skonfigurować system "Inteligentny Dom" należy kolejno wykonać wszystkie kroki opisane poniżej.

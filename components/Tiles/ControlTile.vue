@@ -11,11 +11,31 @@
       ></button-on-off>
       <div v-if="autoEnabled && controllerData && controllerData.controller === 'pid' && typeof controllerData.target === 'number'">
         <div class="number-input">
-          <span @click="updateControllerDataTarget(-1)">-1</span>
-          <span @click="updateControllerDataTarget(-0.1)">-0.1</span>
+          <div class="top-div">
+            <span @click="updateControllerDataTarget(10)">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 142.22 142.21736"><path d="M110.64684,66.44968a5.87057,5.87057,0,0,1,0,9.04455L55.99317,120.77845a5.87118,5.87118,0,0,1-9.61533-4.53106V25.68773a5.86823,5.86823,0,0,1,9.61533-4.52227Z"/></svg>
+            </span>
+            <span @click="updateControllerDataTarget(1)">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 142.22 142.21736"><path d="M110.64684,66.44968a5.87057,5.87057,0,0,1,0,9.04455L55.99317,120.77845a5.87118,5.87118,0,0,1-9.61533-4.53106V25.68773a5.86823,5.86823,0,0,1,9.61533-4.52227Z"/></svg>
+            </span>
+            <span></span>
+            <span @click="updateControllerDataTarget(0.1)">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 142.22 142.21736"><path d="M110.64684,66.44968a5.87057,5.87057,0,0,1,0,9.04455L55.99317,120.77845a5.87118,5.87118,0,0,1-9.61533-4.53106V25.68773a5.86823,5.86823,0,0,1,9.61533-4.52227Z"/></svg>
+            </span>
+          </div>
           <input type="text" v-model.number="controllerData.target" class="value" @change="targetInputChanged" />
-          <span @click="updateControllerDataTarget(0.1)">+0.1</span>
-          <span @click="updateControllerDataTarget(1)">+1</span>
+          <div class="bottom-div">
+            <span @click="updateControllerDataTarget(-10)">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 142.22 142.21736"><path d="M110.64684,66.44968a5.87057,5.87057,0,0,1,0,9.04455L55.99317,120.77845a5.87118,5.87118,0,0,1-9.61533-4.53106V25.68773a5.86823,5.86823,0,0,1,9.61533-4.52227Z"/></svg>
+            </span>
+            <span @click="updateControllerDataTarget(-1)">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 142.22 142.21736"><path d="M110.64684,66.44968a5.87057,5.87057,0,0,1,0,9.04455L55.99317,120.77845a5.87118,5.87118,0,0,1-9.61533-4.53106V25.68773a5.86823,5.86823,0,0,1,9.61533-4.52227Z"/></svg>
+            </span>
+            <span></span>
+            <span @click="updateControllerDataTarget(-0.1)">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 142.22 142.21736"><path d="M110.64684,66.44968a5.87057,5.87057,0,0,1,0,9.04455L55.99317,120.77845a5.87118,5.87118,0,0,1-9.61533-4.53106V25.68773a5.86823,5.86823,0,0,1,9.61533-4.52227Z"/></svg>
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -142,18 +162,63 @@ export default {
    }
   }
 
-  .number-input {
+  .top-div , .bottom-div { 
     display: flex;
+    font-size: $text-larger;
+    > span {
+      display: inline-block;
+      width: 0.625rem;
+      text-align: center;
+      line-height: 0.5;
+    }
+    svg {
+      fill: #BEAC8F;
+      transform: rotate(-90deg);
+    }
+  }
+
+  .bottom-div {
+        svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  .number-input {
+    border: $border;
+    border-radius: 0.8rem;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    width: 40%;
+    margin: 0 auto;
+    overflow: hidden;
+   
 
     input {
+      color: #BEAC8F;
+      font-family: 'MingLiU_PLBBL_MIN2';
       background: transparent;
       border: none;
       text-align: center;
-      font-size: 1.25rem;
+      font-size: $text-larger;
       width: 3rem;
+      height: 0.9em;
       outline: none;
     }
+  }
+
+  .number-input:after {
+    position: absolute;
+    content: '';
+    z-index: -4;
+    background-image: radial-gradient($color-secondary, $color-background);
+    top: 0;
+    left:0;
+    right:0;
+    bottom: 0;
+    opacity: 0.5;
   }
 </style>

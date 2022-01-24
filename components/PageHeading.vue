@@ -35,10 +35,10 @@ export default {
     text-align: right;
     font-size: $text-larger;
     color: $color-primary;
-    padding: 0.8rem 0 0.65rem;
+    padding: 1rem 0 0.65rem;
     width: 100%;
     border-bottom: $border;
-    min-height: (0.8rem + 0.65rem) + $text-larger * $line-height;
+    min-height: (1rem + 0.65rem) + $text-larger * $line-height;
     margin-bottom: 2.5rem;
   }
 }
