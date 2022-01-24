@@ -1,6 +1,6 @@
 <template>
   <div class="dynamic-tile">
-    <TileHeading>{{heading}}</TileHeading>
+    <TileHeading :title="heading">{{heading}}</TileHeading>
     <div class="dynamic-tile__lines" v-if="sensors && sensors.length">
       <p v-for="sensor in sensors" :key="sensor.id">{{sensor.displayName}}: {{sensor.latestValue}}</p>
     </div>
@@ -26,8 +26,10 @@ export default {
       throw "Can't load sensors!";
     }
 
-    this.heading = "Loaded!";
-
+    this.heading = "No sensors";
+    if(data.sensors.length) {
+      this.heading = data.sensors[0].displayName;
+    }
     this.sensors = data.sensors;
 
     // setTimeout(() => {

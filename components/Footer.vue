@@ -2,7 +2,7 @@
   <footer>
     <div class="content">
       <div class="container"> 
-        Wanda Zaparta
+        Anastazja Ide
       </div>     
     </div>
     <div class="ghost"></div>

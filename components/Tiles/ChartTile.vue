@@ -1,8 +1,8 @@
 <template>
   <div class="chart-tile">
-    <TileHeading>{{heading}}</TileHeading>
+    <TileHeading :title="heading">{{heading}}</TileHeading>
     <canvas ref="graphCanvas"></canvas>
-    <div class="chart-legend">
+    <div class="chart-legend" v-if="graphData.length >= 2">
       <div class="chart-legend-item" v-for="obj in graphData" :key="obj.id"
         :style="{'border-bottom-color': obj.borderColor}">
         {{ obj.label }}
@@ -14,6 +14,11 @@
 <script>
 import Chart from 'chart.js/auto';
 import 'chartjs-adapter-luxon';
+
+Chart.defaults.font.size = 14;
+Chart.defaults.color = '#BEAC8F';
+Chart.defaults.font.family = 'MingLiU_PLBBL_MIN2';
+console.log("DEFAULTS:", Chart.defaults);
 
 export default {
   props: {
@@ -28,19 +33,21 @@ export default {
       graph: null,
       styles: [
         {
-          backgroundColor: '#E094FF',
-          borderColor: '#E094FF',
-        },{
-          backgroundColor: '#FFEC93',
-          borderColor: '#FFEC93',
-        },{
           backgroundColor: '#FF487A',
           borderColor: '#FF487A ',
         },{
-          backgroundColor: '#D5F0FF',
-          borderColor: '#D5F0FF',
+          backgroundColor: '#E50853',
+          borderColor: '#E50853',
+        },{
+          backgroundColor: '#BCA98A',
+          borderColor: '#BCA98A',
+        },
+        {
+          backgroundColor: '#8F8ABC',
+          borderColor: '#8F8ABC',
         }
       ]
+      
     };
   },
 
@@ -175,6 +182,7 @@ export default {
       backgroundColor: this.styles[i % this.styles.length].backgroundColor,
       borderColor: this.styles[i % this.styles.length].borderColor,
       data: obj.data,
+      pointRadius: 1.1,
     }));
 
 
@@ -204,6 +212,7 @@ ul {
     border-bottom: $color-primary 0.125rem solid;
     line-height: 1;
     margin-right: 0.4rem;
+    font-size: 0.75rem;
   
     @include bp(max-square) {
       margin: 0.4rem 0.2rem 0;

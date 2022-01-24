@@ -40,6 +40,8 @@ export default {
     if(!data || !data.devices) throw "Can't load device list!";
     const { devices } = data;
 
+    
+
     this.tiles = [
       ...sensors.map(sensor => {
         return {
@@ -53,7 +55,17 @@ export default {
           }
         }
       }),
-      ...devices.map(device => {
+
+      ...sensors.map(sensor => {
+        return {
+          id: 'listing-' + sensor.id,
+          tileType: 'ListingTile',
+          tileData: { 
+            sensorIds: [ sensor.id ],
+          }
+        }
+      }),
+            ...devices.map(device => {
         return {
           id: 'control-' + device.id,
           tileType: 'ControlTile',

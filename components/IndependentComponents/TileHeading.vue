@@ -1,8 +1,16 @@
 <template>
   <div class="tile-header">
-    <h2><slot /></h2>
+    <h2 :title="title"><slot /></h2>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    title: String,
+  }
+}
+</script>
 
 <style lang="scss" scoped>
  .tile-header {
@@ -15,5 +23,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    padding: 1rem;
+    margin: -1rem;
   }
 </style>

@@ -1,19 +1,23 @@
 
 <template>
   <div class="control-tile">
-    <TileHeading>{{ deviceInfo.displayName || '...' }}</TileHeading>
+    <TileHeading :title="deviceInfo.displayName || '...'">{{ deviceInfo.displayName || '...' }}</TileHeading>
     <div class="tile-content">
-      <button-on-off labelTrue='Auto' labelFalse='Manual' :state="autoAnabled" @click="toggleAuto"></button-on-off>
+      <button-on-off labelTrue='Auto' labelFalse='Manual' :state="autoEnabled" @click="toggleAuto"></button-on-off>
       <button-on-off 
-        :style="{opacity: autoAnabled ? 0.6 : 1, pointerEvents: autoAnabled ? 'none' : 'all'}" 
+        v-if="!autoEnabled"
+        :style="{opacity: autoEnabled ? 0.6 : 1, pointerEvents: autoEnabled ? 'none' : 'all'}" 
         labelTrue='Włącz' labelFalse='Wyłącz' :state="targetState" @click="toggleTargetState"
       ></button-on-off>
-      <center>
-        Ustawiono: {{ targetStateString }}  
-      </center>
-      <center>
-        Obecnie: {{ actualStateString }}  
-      </center>
+      <div v-if="autoEnabled && controllerData && controllerData.controller === 'pid' && typeof controllerData.target === 'number'">
+        <div class="number-input">
+          <span @click="updateControllerDataTarget(-1)">-1</span>
+          <span @click="updateControllerDataTarget(-0.1)">-0.1</span>
+          <input type="text" v-model.number="controllerData.target" class="value" @change="targetInputChanged" />
+          <span @click="updateControllerDataTarget(0.1)">+0.1</span>
+          <span @click="updateControllerDataTarget(1)">+1</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -26,22 +30,43 @@ export default {
    data() {
     return {
       targetState: false, 
-      autoAnabled: false,
+      autoEnabled: false,
       deviceInfo: {},
+      controllerData: null,
       fetchTimeout: null,
     };
   },
   methods: {
+    targetInputChanged() {
+      this.updateControllerDataTarget(0); // run for checks
+    },
+    async updateControllerDataTarget(diff) {
+      if(typeof this.controllerData.target !== "number") {
+        return;
+      }
+      this.controllerData.target += diff;
+      if(typeof this.controllerData.targetMin === "number") {
+        this.controllerData.target = Math.max(this.controllerData.target, this.controllerData.targetMin);
+      }
+      if(typeof this.controllerData.targetMax === "number") {
+        this.controllerData.target = Math.min(this.controllerData.target, this.controllerData.targetMax);
+      }
+      this.controllerData.target = Math.round(this.controllerData.target*10)/10;
+
+      const url = `/api/set-device-config/${this.tileData.deviceId}/${encodeURIComponent(JSON.stringify(this.controllerData))}`;
+      const data = await this.$axios.$post(url);
+      console.log("Device config set", data);
+    },
     toggleTargetState() {
       this.targetState = !this.targetState;
       this.send();
     },
     toggleAuto() {
-      this.autoAnabled = !this.autoAnabled;
+      this.autoEnabled = !this.autoEnabled;
       this.send();
     },
     async send() {
-      const state = this.autoAnabled ? "null" : (this.targetState ? "true" : "false");
+      const state = this.autoEnabled ? "null" : (this.targetState ? "true" : "false");
       const url = `/api/set-device-state/${this.tileData.deviceId}/${state}`;
       const data = await this.$axios.$post(url);
       console.log("Device state set", data);
@@ -59,7 +84,7 @@ export default {
   },
   computed: {
     targetStateString() {
-      return (this.deviceInfo.overrideState === null ? "Auto" : (this.deviceInfo.overrideState ? "Wł." : "Wył."))
+      return (this.deviceInfo.overrideState === null ? "Auto" : (this.deviceInfo.overrideState ? "Wł." : "Wył."));
     },
     actualStateString() {
       return (this.deviceInfo.overrideState === null ? this.deviceInfo.currentState : this.deviceInfo.overrideState) ? "Wł." : "Wył.";
@@ -78,15 +103,21 @@ export default {
         throw "Can't load device info for "+this.tileData.deviceId+"!";
       }
 
-      this.autoAnabled = entry.overrideState === null;
-      if(this.autoAnabled) {
+      this.autoEnabled = entry.overrideState === null;
+      if(this.autoEnabled) {
         this.targetState = entry.currentState;
       }else{
         this.targetState = entry.overrideState;
       }
 
       this.deviceInfo = entry;
-      console.log(this.deviceInfo)
+      try {
+        this.controllerData = JSON.parse(entry.controllerData);
+        if(typeof this.controllerData !== "object") throw "";
+      }catch(e) {
+        this.controllerData = null;
+        console.log("Error while parsing device controllerData", e);
+      }
     }finally{
       this.queueFetch(10);
     }
@@ -109,5 +140,20 @@ export default {
       margin-left: auto;
       margin-right: auto;
    }
+  }
+
+  .number-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    input {
+      background: transparent;
+      border: none;
+      text-align: center;
+      font-size: 1.25rem;
+      width: 3rem;
+      outline: none;
+    }
   }
 </style>

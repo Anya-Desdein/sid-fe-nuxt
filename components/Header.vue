@@ -15,7 +15,7 @@
             <n-link to="/dashboard">Dashboard</n-link>
           </li>              
           <li>
-            <n-link to="/tos">ToS</n-link>
+            <n-link to="/about">About</n-link>
           </li>
         </ul>
       </div>
