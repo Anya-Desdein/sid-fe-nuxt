@@ -207,7 +207,12 @@ export default {
       width: 3rem;
       height: 0.9em;
       outline: none;
-    }
+      text-shadow: $color-background 0 0 0.10rem, 
+        $color-background 0 0 0.15rem,
+        transparentize($color-background, 0.4) 0 0 1rem,   
+        transparentize($color-background, 0.3) 0 0 2.8rem,  
+        transparentize($color-background, 0.8) 0 0 3rem;
+      }
   }
 
   .number-input:after {
