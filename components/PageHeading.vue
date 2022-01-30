@@ -1,5 +1,5 @@
 <template>
- <div class="page-heading" :class="{'page-heading--title': title, 'page-heading--no-info-bar': noInfoBar}">
+ <div class="page-heading" :class="{'page-heading--title': title, 'page-heading--top-line': topLine, 'page-heading--no-info-bar': noInfoBar}">
     <div class="container" v-if="title">
       <h1 class="page-heading__title">{{title}}</h1>
     </div>
@@ -15,7 +15,8 @@
 export default {
   props: {
     title: String,
-    noInfoBar: Boolean
+    noInfoBar: Boolean,
+    topLine: Boolean,
   }
 }
 </script>
@@ -40,6 +41,13 @@ export default {
     border-bottom: $border;
     min-height: (1rem + 0.65rem) + $text-larger * $line-height;
     margin-bottom: 2.5rem;
+  }
+
+  &--top-line {
+    .page-heading__info-bar {
+      border-top: $border;
+      margin-top: 2.5rem;
+    }
   }
 }
 

@@ -24,7 +24,7 @@
 
   @include bp(max-square) {
     margin-top: 1rem;
-    gap: 4rem 2rem;
+    gap: 2.25rem 2rem;
     grid-template-areas:   
       "c1 c2 c3"   
       "c4  e c5"

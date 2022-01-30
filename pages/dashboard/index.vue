@@ -1,13 +1,7 @@
 <template>
   <div>
     <PageHeading>Ostatnia aktualizacja: 18:20</PageHeading>
-    <div class="container page-container"> 
-      <AppGrid>
-        <div v-for="tile in tiles" :key="tile.id">
-          <GenericTile :tileType="tile.tileType" :tileData="tile.tileData"></GenericTile>
-        </div>
-      </AppGrid>
-    </div>
+    <GridPages :tiles="tiles" />
   </div>
 </template>
 
