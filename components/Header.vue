@@ -104,6 +104,10 @@ a:not(.icon) {
     text-decoration: none;
     color: inherit;
   }
+  
+  &:hover {
+    color: $color-hover;
+  }
 
 }
 @include bp(max-portrait) {

@@ -198,6 +198,11 @@ body {
   font-size: $text-normal;
 }
 
+.settings-svg {
+  fill: $color-primary;
+  height: $text-larger;
+}
+
 .layout-root {
   min-height: 100vh;
   position: relative;
@@ -289,4 +294,13 @@ p {
   box-sizing: border-box;
 }
 
+a, a:visited {
+  transition: $transition;
+  text-decoration: none;
+  color: #7a7397;
+}
+
+a:hover {
+  color: #9e95c5;
+}
 </style>

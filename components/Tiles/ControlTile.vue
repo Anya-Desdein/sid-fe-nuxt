@@ -23,7 +23,7 @@
                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 142.22 142.21736"><path d="M110.64684,66.44968a5.87057,5.87057,0,0,1,0,9.04455L55.99317,120.77845a5.87118,5.87118,0,0,1-9.61533-4.53106V25.68773a5.86823,5.86823,0,0,1,9.61533-4.52227Z"/></svg>
             </span>
           </div>
-          <input type="text" v-model.number="controllerData.target" class="value" @change="targetInputChanged" />
+          <input type="text" v-model="targetInputText" class="value" @change="targetInputChanged" />
           <div class="bottom-div">
             <span @click="updateControllerDataTarget(-10)">
                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 142.22 142.21736"><path d="M110.64684,66.44968a5.87057,5.87057,0,0,1,0,9.04455L55.99317,120.77845a5.87118,5.87118,0,0,1-9.61533-4.53106V25.68773a5.86823,5.86823,0,0,1,9.61533-4.52227Z"/></svg>
@@ -54,10 +54,15 @@ export default {
       deviceInfo: {},
       controllerData: null,
       fetchTimeout: null,
+      targetInputText: '',
     };
   },
   methods: {
     targetInputChanged() {
+      const parsed = parseFloat(this.targetInputText);
+      if(!isNaN(parsed)) {
+        this.controllerData.target = parsed;
+      }
       this.updateControllerDataTarget(0); // run for checks
     },
     async updateControllerDataTarget(diff) {
@@ -72,6 +77,8 @@ export default {
         this.controllerData.target = Math.min(this.controllerData.target, this.controllerData.targetMax);
       }
       this.controllerData.target = Math.round(this.controllerData.target*10)/10;
+
+      this.targetInputText = this.controllerData.target;
 
       const url = `/api/set-device-config/${this.tileData.deviceId}/${encodeURIComponent(JSON.stringify(this.controllerData))}`;
       const data = await this.$axios.$post(url);

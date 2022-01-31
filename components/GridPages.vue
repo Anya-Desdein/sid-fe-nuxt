@@ -1,7 +1,7 @@
 <template>
   <div class="grid-pages">
     <div v-for="(pageTiles, pageNumber) in pages" :key="pageNumber">
-      <PageHeading class="grid-separator" :topLine="true" v-if="pageNumber !== 0" />
+      <PageHeading class="grid-separator" noInfoBar :topLine="true" v-if="pageNumber !== 0" />
       <div class="container">
         <AppGrid>
           <div v-for="tile in pageTiles" :key="tile.id">
