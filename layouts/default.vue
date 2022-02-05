@@ -10,55 +10,9 @@
         <img src="~assets/img/glowing_eyes7.png" alt="background eyes" class="eyes">
       </div>
     </div>
-    <!-- <Fireflies /> -->
-    <!-- <div class="bg-fireflies">
-      <div v-for="(el, i) in elements" :key="i" :class="el" ><div class="firefly-inner"></div></div>
-    </div> -->
+    <Fireflies />
   </div>
 </template>
-
-
-<script>
-export default {
-  data() {
-    let presets = [
-      [
-        [3, 'firefly-a'], 
-        [6, 'firefly-b'], 
-        [9, 'firefly-c'], 
-        [15, 'firefly-d'], 
-        [12, 'firefly-e'],
-        [33, 'firefly-h'],
-        [61, 'firefly-i'],
-      ],
-      [
-        [5, 'firefly-f'], 
-        [22, 'firefly-g'], 
-        [33, 'firefly-h'], 
-        [41, 'firefly-i'],
-      ]
-    ];
-
-    const numberArray = presets[0];
-
-    const elements = [];
-    let i = 0;
-
-    for(let [count, name] of numberArray) {
-      for(let j = 0; j < count; j++) {
-        elements.push(['firefly', name, 'firefly-' + (i++)])
-      }
-    }
-
-    console.log("Total fireflies:", i);
-
-    return {
-      elements
-    };
-  }
-}
-</script>
-
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Xanh+Mono&display=swap');

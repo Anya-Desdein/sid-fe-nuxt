@@ -16,7 +16,7 @@ class FireflyRenderer {
     this.frameGenerator = frameGenerator;
     this.destroyed = false;
     this.currentFrame = 0;
-    this.fps = 12;
+    this.fps = 15;
     this.nextFrameTimeout = null;
   }
 
@@ -82,13 +82,14 @@ class FireflyRenderer {
   }
 }
 
+const easingFunction = BezierEasing(1, 0.08, 0, 0.92);
+// const easingFunction = x => x;
+
 class FireflyAnimator {
   constructor() {
     this.preset = [];
     this.destroyed = false;
     this.styleDefaults = { rotate: 0, startPosX: 0, startPosY: 0, translate: [0, 0], scale: 1, opacity: 100, hue: 0, saturate: 1 };
-          
-    const easingFunction = BezierEasing(1, 0.08, 0, 0.92);
 
     const butterflyFrames = ['/img/firefly21.svg', '/img/firefly22.svg', '/img/firefly24.svg', '/img/firefly23.svg'];
     this.styles = Object.fromEntries(Object.entries({
@@ -105,7 +106,7 @@ class FireflyAnimator {
           ],
           [
             { rate: 20, // SUBmove
-              percent: 0,   translate: [0, 0] },
+              percent: 0,   translate: [0, 0], scale: 1 },
             { percent: 20,  translate: [-0.2, -0.1] },
             { percent: 40,  translate: [-0.1, 0.2] },
             { percent: 60,  translate: [-0.3, 0.2] },
@@ -140,6 +141,21 @@ class FireflyAnimator {
         frames: butterflyFrames,
         animations: [
           [
+            { percent: 0, rotate: 0, translate: [0, 0], scale: 1, opacity: 100,   hue: 0, saturate: 1 },
+            { percent: 15, rotate: 45, translate: [1, 1], scale: 1, opacity: 100,   hue: 0, saturate: 1 },
+            { percent: 30, rotate: 0, translate: [2, 2], scale: 2, opacity: 100,   hue: 0, saturate: 1 },
+            { percent: 45, rotate: 45, translate: [3, 3], scale: 1, opacity: 100,   hue: 0, saturate: 1 },
+            { percent: 60, rotate: 0, translate: [3.5, 4], scale: 1, opacity: 100,   hue: 0, saturate: 1 },
+            { percent: 74, rotate: 45, translate: [3, 1], scale: 1, opacity: 100,   hue: 0, saturate: 1 },
+            { percent: 88, rotate: 0, translate: [3, 0], scale: 1, opacity: 100,   hue: 0, saturate: 1 },
+            { percent: 100, rotate: 45, translate: [0, 0], scale: 1, opacity: 100,   hue: 0, saturate: 1 },
+          ],
+        ],
+      },
+      'firefly-test2': {
+        frames: butterflyFrames,
+        animations: [
+          [
             { percent: 0, rotate: 0, translate: [1, 0], scale: 2, opacity: 40,   hue: 0, saturate: 1 },
             { percent: 15, rotate: 0, translate: [2, 0], scale: 1, opacity: 40,   hue: 0, saturate: 0 },
             { percent: 30, rotate: 0, translate: [3, 0], scale: 1, opacity: 40,   hue: 0, saturate: 1 },
@@ -155,34 +171,30 @@ class FireflyAnimator {
       return [k, { 
         frames, 
         animations: animations.map(anim => {
-          return anim.map((step, stepNumber) => {
-            const ret = {};
-            Object.entries(step).forEach(([prop, value]) => {
-              if(value !== undefined && value !== null) {
-                ret[prop] = value;
-                // console.log("step " + stepNumber, "SET ", prop, "=", ret[prop])
-              }
-            });
+          const styles = anim.map((step, stepNumber) => {
+            const ret = {percent: step.percent};
             Object.entries(this.styleDefaults).forEach(([prop]) => {
               if(!(prop in ret)) {
                 const reverseAnim = [...anim].reverse();
-                const prevIdx = reverseAnim.findIndex((v, i) => (i > anim.length - stepNumber - 1) && prop in v && v[prop] !== null);
+                const prevIdx = reverseAnim.findIndex((v, i) => (i >= anim.length - stepNumber - 1) && prop in v && v[prop] !== null);
                 const nextIdx = anim.findIndex((v, i) => (i > stepNumber) && prop in v && v[prop] !== null);
-                const prev = prevIdx >= 0 ? reverseAnim[prevIdx] : { percent: 0, ...this.styleDefaults, translate: [0, 0] };
+                const prevOrThis = prevIdx >= 0 ? reverseAnim[prevIdx] : { ...this.styleDefaults, translate: [0, 0], ...step };
                 const next = nextIdx >= 0 ? anim[nextIdx] : { percent: 100, ...this.styleDefaults, translate: [0, 0] };
-                const prevPercent = prev.percent / 100;
+                const prevPercent = prevOrThis.percent / 100;
                 const nextPercent = next.percent / 100;
-                const prevValue = prev[prop];
+                const prevValue = prevOrThis[prop];
                 const nextValue = next[prop];
-                const currentPercent = step.percent / 100;
-                const t = (currentPercent - prevPercent) / (nextPercent - prevPercent);
-                const currentRatio = t; // easingFunction(t);
-                ret[prop] = prevValue * (1-currentRatio) + nextValue * currentRatio;
-                console.log("step " + stepNumber, "GEN ", prop, "=", ret[prop], " ", t+"t", currentRatio+"ratio", prevPercent*100+"%-"+nextPercent*100+"%", prevValue+"-"+nextValue);
+                ret[prop] = {
+                  prevPercent, nextPercent,
+                  prevValue, nextValue
+                };
               }
             });
             return ret;
           });
+          console.log(k, styles)
+          styles.pop();
+          return styles;
         }),
       }];
     }));
@@ -199,24 +211,41 @@ class FireflyAnimator {
     };
 
     for(let anim of animations) {
-      const bIdx = anim.findIndex(x => x.percent > progress * 100);
-      if(bIdx < 0) {
+      const foundIdx = [...anim].reverse().findIndex(x => x.percent <= progress * 100);
+      if(foundIdx === -1) {
         debugger;
-        throw "Invalid animation";
       }
-      const aIdx = bIdx == 0 ? 0 : bIdx - 1;
-      const a = anim[aIdx];
-      const b = anim[bIdx];
-      const t = (progress * 100 - a.percent) / (b.percent === a.percent ? 1 : b.percent - a.percent);
-      const ti = 1 - t;
+      const idx = anim.length - 1 - foundIdx;
+      const step = anim[idx];
 
-      ret.rotate += a.rotate * ti + b.rotate * t;
-      ret.translate[0] += a.translate[0] * ti + b.translate[0] * t;
-      ret.translate[1] += a.translate[1] * ti + b.translate[1] * t;
-      ret.scale *= a.scale * ti + b.scale * t;
-      ret.opacity = (ret.opacity / 100 * a.opacity * ti / 100 + b.opacity * t / 100) * 100;
-      ret.hue += a.hue * ti + b.hue * t;
-      ret.saturate *= a.saturate * ti + b.saturate * t;
+      const prop = ({prevPercent, nextPercent, prevValue, nextValue}, fn) => {
+        const t = (progress - prevPercent) / (nextPercent - prevPercent);
+        if(t < 0 || t > 1) {
+          debugger;
+        }
+        // debugger;
+        const r = easingFunction(t);
+        if(!fn) {
+          return r * nextValue + (1-r) * prevValue;
+        }else{
+          return fn(r, prevValue, nextValue);
+        }
+      };
+
+      ret.rotate += prop(step.rotate);
+      ret.scale *= prop(step.scale);
+      ret.opacity *= prop(step.opacity);
+      ret.hue += prop(step.hue);
+      ret.saturate *= prop(step.saturate);
+
+      const translate = prop(step.translate, (r, prev, next) => {
+        return [
+          prev[0]*(1-r) + next[0]*r,
+          prev[1]*(1-r) + next[1]*r,
+        ];
+      });
+      ret.translate[0] += translate[0];
+      ret.translate[1] += translate[1];
     }
 
     return ret;
@@ -231,7 +260,7 @@ class FireflyAnimator {
   }
 
   calculateElementAnimationTime(time, elementIdx) {
-    return time + 20 - (elementIdx * 2) % 19;
+    return time; //+ 20 - (elementIdx * 2) % 19;
   }
 
   calculateElementAnimationDuration(elementIdx) {
@@ -241,16 +270,17 @@ class FireflyAnimator {
   }
 
   generateObjects({ objects, currentFrame }, time) {
-    let elementIdx = 0;
     let added = false;
+    let elementIdx = -1;
     for(let [count, type] of this.preset) {
       for(let i = 0; i < count; i++) {
+        elementIdx++;
+        const initialT = this.calculateElementAnimationTime(0, elementIdx);
         const t = this.calculateElementAnimationTime(time, elementIdx);
         const duration = this.calculateElementAnimationDuration(elementIdx);
-        const progress = (t / duration) % 1;
-        if((time / duration) >= 1) {
+        const progress = (t / duration + 100.0) % 1.0;
+        if((objects[elementIdx] && objects[i].finished) || ((time-initialT) / duration) >= 1) {
           objects[elementIdx].finished = true;
-          debugger;
           continue;
         }
         const style = this.calculateStyle(type, currentFrame, progress);
@@ -264,8 +294,10 @@ class FireflyAnimator {
         style.startPosX = objects[elementIdx].startPos[0];
         style.startPosY = objects[elementIdx].startPos[1];
         objects[elementIdx].frames.push(style);
-        elementIdx++;
         added = true;
+        if(i === 5) {
+          console.log((progress*100).toFixed(1), time, duration)
+        }
       }
     }
     return added;
@@ -277,6 +309,7 @@ class FireflyAnimator {
     // debugger;
     if(!data.finished) {
       if(!this.generateObjects(data, time)) {
+        console.log("finished", time);
         data.finished = true;
       }
     }
@@ -284,7 +317,9 @@ class FireflyAnimator {
       frame.push(obj.frames[data.currentFrame % obj.frames.length]);
     }
     const end = new Date();
-    console.log("Generating frame took ", (end - start));
+    if((end - start) > 10) {
+      console.log("Generating frame took ", (end - start));
+    }
     return frame;
   }
 
@@ -298,9 +333,9 @@ class FireflyAnimator {
 
     new Promise(async () => {
       while (!this.destroyed) {
-        if(frames.length >= 2) {
+        if(frames.length >= 3) {
           await new Promise(r => setTimeout(r, 1 + frames.length * 5));
-          if(frames.length > 10) {
+          if(frames.length >= 10) {
             continue;
           }
         }
@@ -315,7 +350,9 @@ class FireflyAnimator {
         await new Promise(r => setTimeout(r, 1)); // todo: clean up using promises 
         val = frames.shift();
       }
-      console.log("Got frame, left in buffer:", frames.length);
+      if(frames.length <= 2 || frames.length > 10) {
+        console.log("Got frame, left in buffer:", frames.length);
+      }
       return val;
     };
   }
@@ -336,7 +373,7 @@ export default {
 
     this.animator = new FireflyAnimator();
     this.animator.setPreset([
-        // [1, 'firefly-test'], 
+        // [10, 'firefly-test'], 
         [40, 'firefly-a'], 
         [15, 'firefly-b'], 
     ])

@@ -44,6 +44,9 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+  .settings-svg {
+      margin-left: 0.2em;
+  }
 
 .page-heading {
   display:flex;
