@@ -17,7 +17,7 @@ import 'chartjs-adapter-luxon';
 
 Chart.defaults.font.size = 14;
 Chart.defaults.color = '#BEAC8F';
-Chart.defaults.font.family = 'MingLiU_PLBBL_MIN2';
+Chart.defaults.font.family ="'Xanh Mono', monospace";
 console.log("DEFAULTS:", Chart.defaults);
 
 export default {

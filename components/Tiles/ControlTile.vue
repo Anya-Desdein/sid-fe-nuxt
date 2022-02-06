@@ -206,7 +206,7 @@ export default {
 
     input {
       color: #BEAC8F;
-      font-family: 'MingLiU_PLBBL_MIN2';
+      font-family: 'Xanh Mono', monospace;
       background: transparent;
       border: none;
       text-align: center;

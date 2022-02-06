@@ -120,15 +120,6 @@
     @include text-selection;
 }
 
-
-@font-face {
-  font-family: 'MingLiU_PLBBL_MIN2';
-  src: url('~assets/fonts/MingLiU_PLBBL_MIN2.ttf') format('truetype'),
-       url('~assets/fonts/MingLiU_PLBBL_MIN2.woff') format('woff'),
-       url('~assets/fonts/MingLiU_PLBBL_MIN2.woff2') format('woff2');
-}
-
-
 html, body {
   margin: 0;
   padding: 0;
@@ -137,7 +128,6 @@ html, body {
 
 html {
   font-family: 'Xanh Mono', monospace;
-  // font-family: 'MingLiU_PLBBL_MIN2', monospace;
   color: $color-text;
   background-color: $color-background;
 
