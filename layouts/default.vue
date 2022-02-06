@@ -7,7 +7,7 @@
     <div class="bg-img">
       <div class="container app-background-image-container"> 
         <img src="~assets/img/Background_v37_1_blurred.png" alt="background image">
-        <img src="~assets/img/glowing_eyes7.png" alt="background eyes" class="eyes">
+        <img src="~assets/img/glowing_eyes8.png" alt="background eyes" class="eyes">
       </div>
     </div>
     <Fireflies />
