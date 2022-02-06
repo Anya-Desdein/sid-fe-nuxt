@@ -97,16 +97,16 @@ class FireflyAnimator {
         frames: butterflyFrames,
         animations: [
           [
-            { rate: 60, // move
-              percent: 0,   rotate: 0,    translate: [0, 0],      scale: 3.8, opacity: 40,   hue: 0,       saturate: 1 },
-            { percent: 35,  rotate: -100, translate: [-0.6, 0.4], scale: 3.2, opacity: null, hue: null },
-            { percent: 50,  rotate: -160, translate: [-1, -0.4],  scale: 2.6, opacity: 25,   hue: null },
-            { percent: 70,  rotate: 80,   translate: [0.2, 1],    scale: 3.2, opacity: null,   hue: 28.68, saturate: 0.761 },
-            { percent: 100, rotate: 0,    translate: [0, 0],      scale: 3.8, opacity: 40,   hue: 0,       saturate: 1 },
+            { rate: 61, // move
+              percent: 0,   rotate: 0,    translate: [0, 0],       scale: 3.8,   opacity: 100,   hue: 0,       saturate: 1 },
+            { percent: 35,  rotate: -100, translate: [-0.6, 0.4],  scale: 3.2,   opacity: null,  hue: null,    saturate: 1 },
+            { percent: 50,  rotate: -160, translate: [-1, -0.4],   scale: 2.6,   opacity: 25,    hue: null,    saturate: 1  },
+            { percent: 70,  rotate: 80,   translate: [0.2, 1],     scale: 3.2,   opacity: null,  hue: 28.68,   saturate: 0.761 },
+            { percent: 100, rotate: 0,    translate: [0, 0],       scale: 3.8,   opacity: 40,    hue: 0,       saturate: 1 },
           ],
           [
-            { rate: 20, // SUBmove
-              percent: 0,   translate: [0, 0], scale: 1 },
+            { rate: 31, // SUBmove
+              percent: 0,   translate: [0, 0] },
             { percent: 20,  translate: [-0.2, -0.1] },
             { percent: 40,  translate: [-0.1, 0.2] },
             { percent: 60,  translate: [-0.3, 0.2] },
