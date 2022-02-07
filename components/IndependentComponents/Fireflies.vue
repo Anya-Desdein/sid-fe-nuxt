@@ -58,8 +58,6 @@ class FireflyRenderer {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, width, height);
       ctx.fillStyle = 'green';
-      ctx.strokeStyle = 'red';
-      ctx.strokeRect(20, 10, 160, 100);
       for(let obj of frame) {
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         const { rotate, startPosX, startPosY, translate, scale, opacity, hue, saturate } = obj;
@@ -93,11 +91,12 @@ class FireflyAnimator {
 
     const butterflyFrames = ['/img/firefly21.svg', '/img/firefly22.svg', '/img/firefly24.svg', '/img/firefly23.svg'];
     this.styles = Object.fromEntries(Object.entries({
+//butterflies
       'firefly-a': {
         frames: butterflyFrames,
         animations: [
           [
-            { rate: 61, // move
+            { rate: 60, // move
               percent: 0,   rotate: 0,    translate: [0, 0],       scale: 3.8,   opacity: 100,   hue: 0,       saturate: 1 },
             { percent: 35,  rotate: -100, translate: [-0.6, 0.4],  scale: 3.2,   opacity: null,  hue: null,    saturate: 1 },
             { percent: 50,  rotate: -160, translate: [-1, -0.4],   scale: 2.6,   opacity: 25,    hue: null,    saturate: 1  },
@@ -105,7 +104,7 @@ class FireflyAnimator {
             { percent: 100, rotate: 0,    translate: [0, 0],       scale: 3.8,   opacity: 40,    hue: 0,       saturate: 1 },
           ],
           [
-            { rate: 31, // SUBmove
+            { rate: 30, // SUBmove
               percent: 0,   translate: [0, 0] },
             { percent: 20,  translate: [-0.2, -0.1] },
             { percent: 40,  translate: [-0.1, 0.2] },
@@ -119,15 +118,108 @@ class FireflyAnimator {
         frames: butterflyFrames,
         animations: [
           [
-            { rate: 51, // move
-              percent: 0,   rotate: 0,    translate: [0, 0],      scale: 2.8, opacity: 40,   hue: 0,       saturate: 1 },
-            { percent: 35,  rotate: 100,  translate: [0.6, -0.4], scale: 2.2, opacity: null, hue: null },
-            { percent: 50,  rotate: 160,  translate: [1, 0.4],    scale: 1.6, opacity: 25,   hue: 0 },
-            { percent: 70,  rotate: 80,   translate: [-0.2, -1],  scale: 2.2, opacity: null, hue: 28.68, saturate: 0.761 },
-            { percent: 100, rotate: 0,    translate: [0, 0],      scale: 2.8, opacity: 40,   hue: 0,       saturate: 1 },
+            { rate: 60, // move
+              percent: 0,   rotate: 0,    translate: [0, 0],      scale: 2.5, opacity: 45,   hue: 0,       saturate: 1 },
+            { percent: 17,  rotate: -80,  translate: [-0.4, 0.6], scale: 2,   opacity: 55,   hue: 28.68,   saturate: 0.761 },
+            { percent: 33,  rotate: 60,   translate: [0,6, -1],   scale: 2.1, opacity: 45},
+            { percent: 62,  rotate: 40,   translate: [-0.3, -0.3],scale: 2.9, opacity: 5},
+            { percent: 100, rotate: 0,    translate: [0, 0],      scale: 2.5, opacity: 45,   hue: 0,       saturate: 1 },
           ],
           [
-            { rate: 21, // SUBmove
+            { rate: 30, // SUBmove
+              percent: 0,   translate: [0, 0] },
+            { percent: 13,  translate: [0.1, 0.3] },
+            { percent: 20,  translate: [-0.4, 0.2] },
+            { percent: 33,  translate: [-0.2, 0.7] },
+            { percent: 49,  translate: [-0.4, 0.2] },
+            { percent: 59,  translate: [-0.4, -0.7] },
+            { percent: 74,  translate: [0.3, -0.2] },
+            { percent: 100, translate: [0, 0] },
+          ],
+        ],
+      },
+      'firefly-c': {
+        frames: butterflyFrames,
+        animations: [
+          [
+            { rate: 60, // move 
+              percent: 0,   rotate: 120,  translate: [0, 0],       scale: 1.9,   opacity: 30,    hue: 28.68,   saturate: 0.761 },
+            { percent: 25,  rotate: 60,   translate: [-1.6, -2.2], scale: 2.8,   opacity: 25,    hue: 0 ,      saturate: 1 },
+            { percent: 40,  rotate: 80,   translate: [-2, -1.2],   scale: 2.2,   opacity: 50 },
+            { percent: 100, rotate: 120,  translate: [0, 0],       scale: 1.9,   opacity: 30,    hue: 28.68,   saturate: 0.761 },
+          ],
+          [
+            { rate: 30, // SUBmove
+              percent: 0,   translate: [0, 0] },
+            { percent: 20,  translate: [0.1, 0.05] },
+            { percent: 40,  translate: [0.15, -0.2] },
+            { percent: 60,  translate: [-0.1, -0.22] },
+            { percent: 80,  translate: [-0.08, -0.2] },
+            { percent: 100, translate: [0, 0] },
+          ],
+        ],
+      },
+      'firefly-d': {
+        frames: butterflyFrames,
+        animations: [
+          [
+            { rate: 60, // move
+              percent: 0,   rotate: -70,    translate: [0, 0],       scale: 1.6,   opacity: 35,      hue: 0,       saturate: 1 },
+            { percent: 45,  rotate: null,   translate: [1.2, 0.4],   scale: 2,     opacity: 70 },
+            { percent: 55,  rotate: -130,   translate: [-1, -0.3],   scale: 1.4,   opacity: null,    hue: 28.68,   saturate: 0.761 },
+            { percent: 70,  rotate: -40,    translate: [0.2, 1],     scale: 2.2,   opacity: null },
+            { percent: 100, rotate: -70,    translate: [0, 0],       scale: 1.6,   opacity: 35,      hue: 0,       saturate: 1 },
+          ],
+          [
+            { rate: 30, // SUBmove
+              percent: 0,   translate: [0, 0] },
+            { percent: 20,  translate: [-0.2, -0.1] },
+            { percent: 40,  translate: [0.1, 0.3] },
+            { percent: 60,  translate: [-0.4, -0.2] },
+            { percent: 80,  translate: [-0.13, 0.08] },
+            { percent: 100, translate: [0, 0] },
+          ],
+        ],
+      },
+      'firefly-e': {
+        frames: butterflyFrames,
+        animations: [
+          [
+            { rate: 60, // move
+              percent: 0,   rotate: -180,   translate: [1.4, 6],     scale: 1.5,   opacity: 0,    hue: 0,       saturate: 1 },
+            { percent: 2,   opacity: 5 },
+            { percent: 45,  rotate: -170,   translate: [2, 4],       scale: 1.5,   opacity: 40 },
+            { percent: 60,  rotate: -180,   translate: [0, 0],       scale: 1.2,   opacity: 50 },
+            { percent: 75,  rotate: -90,    translate: [-2, -1],     scale: 1.6,   opacity: 40,   hue: 28.68,   saturate: 0.761 },
+            { percent: 95,  rotate: -120,   translate: [-2.5, -1],   scale: 1.3,   opacity: 5 },
+            { percent: 100, rotate: -180,   translate: [-3, 1.2],    scale: 0.6,   opacity: 0,      hue: 0,       saturate: 1 },
+          ],
+          [
+            { rate: 30, // SUBmove
+              percent: 0,   translate: [0, 0] },
+            { percent: 20,  translate: [0.2, -0.3] },
+            { percent: 40,  translate: [-0.2, -0.2] },
+            { percent: 60,  translate: [0.1, 0.2] },
+            { percent: 80,  translate: [0.3, 0.1] },
+            { percent: 100, translate: [0, 0] },
+          ],
+        ],
+      },
+//fireflies 
+
+      'firefly-f': {
+        frames: butterflyFrames,
+        animations: [
+          [
+            { rate: 60, // move
+              percent: 0,   rotate: 0, translate: [0, 0], scale: 1.2,   opacity: 20,  hue: 0, },
+            { percent: 25,  translate: [-0.7, 0.8],       scale: 1.75,  hue: -16.41 },
+            { percent: 50,  translate: [-1, -0.4],        scale: 0.7, },
+            { percent: 90,  translate: [0.2, -1],         scale: 1.4,   hue: -16.41 },
+            { percent: 100, rotate: 0, translate: [0, 0], scale: 1.2,   opacity: 20,  hue: 0 },
+          ],
+          [
+            { rate: 30, // SUBmove
               percent: 0,   translate: [0, 0] },
             { percent: 20,  translate: [-0.2, -0.1] },
             { percent: 40,  translate: [-0.1, 0.2] },
@@ -137,33 +229,70 @@ class FireflyAnimator {
           ],
         ],
       },
-      'firefly-test': {
+      'firefly-g': {
         frames: butterflyFrames,
         animations: [
           [
-            { percent: 0, rotate: 0, translate: [0, 0], scale: 1, opacity: 100,   hue: 0, saturate: 1 },
-            { percent: 15, rotate: 45, translate: [1, 1], scale: 1, opacity: 100,   hue: 0, saturate: 1 },
-            { percent: 30, rotate: 0, translate: [2, 2], scale: 2, opacity: 100,   hue: 0, saturate: 1 },
-            { percent: 45, rotate: 45, translate: [3, 3], scale: 1, opacity: 100,   hue: 0, saturate: 1 },
-            { percent: 60, rotate: 0, translate: [3.5, 4], scale: 1, opacity: 100,   hue: 0, saturate: 1 },
-            { percent: 74, rotate: 45, translate: [3, 1], scale: 1, opacity: 100,   hue: 0, saturate: 1 },
-            { percent: 88, rotate: 0, translate: [3, 0], scale: 1, opacity: 100,   hue: 0, saturate: 1 },
-            { percent: 100, rotate: 45, translate: [0, 0], scale: 1, opacity: 100,   hue: 0, saturate: 1 },
+            { rate: 60, // move
+              percent: 0,   rotate: 0, translate: [0, 0],   scale: 0.9,   opacity: 25,  hue: 0,       saturate: 1 },
+            { percent: 17,  translate: [-0.7, 0.1],         scale: 1 },
+            { percent: 33,  translate: [-1.2, -0.4],        scale: 0.65, },
+            { percent: 62,  translate: [0.2, -1.2],         scale: 1.2,   hue: -16.41},
+            { percent: 100, rotate: 0, translate: [0, 0],   scale: 0.9,   opacity: 25,  hue: 0,       saturate: 1 },
+          ],
+          [
+            { rate: 30, // SUBmove
+              percent: 0,   translate: [0, 0] },
+            { percent: 13,  translate: [0.1, 0.3] },
+            { percent: 20,  translate: [-0.4, 0.2] },
+            { percent: 33,  translate: [-0.2, 0.7] },
+            { percent: 49,  translate: [-0.4, 0.2] },
+            { percent: 59,  translate: [-0.7, -0.4] },
+            { percent: 74,  translate: [0.3, -0.2] },
+            { percent: 100, translate: [0, 0] },
           ],
         ],
       },
-      'firefly-test2': {
+      'firefly-h': {
         frames: butterflyFrames,
         animations: [
           [
-            { percent: 0, rotate: 0, translate: [1, 0], scale: 2, opacity: 40,   hue: 0, saturate: 1 },
-            { percent: 15, rotate: 0, translate: [2, 0], scale: 1, opacity: 40,   hue: 0, saturate: 0 },
-            { percent: 30, rotate: 0, translate: [3, 0], scale: 1, opacity: 40,   hue: 0, saturate: 1 },
-            { percent: 45, rotate: 0, translate: [4, 0], scale: 1, opacity: 40,   hue: 180, saturate: 1 },
-            { percent: 60, rotate: 0, translate: [5, 0], scale: 1, opacity: 0,   hue: 0, saturate: 1 },
-            { percent: 75, rotate: 0, translate: [6, 0], scale: 1, opacity: 100,   hue: 0, saturate: 1 },
-            { percent: 90, rotate: 0, translate: [8, 0], scale: 3, opacity: 40,   hue: 0, saturate: 1 },
-            { percent: 100, rotate: 0, translate: [12, 0], scale: 1, opacity: 40,   hue: 0, saturate: 1 },
+            { rate: 60, // move
+              percent: 0,   rotate: 0, translate: [0, 0],   scale: 0.4,   opacity: 30,  hue: 0,       saturate: 1 },
+            { percent: 25,  scale: 0.3 },
+            { percent: 90,  scale: 0.2 },
+            { percent: 100, rotate: 0, translate: [0, 0],   scale: 0.4,   opacity: 30,  hue: 0,       saturate: 1 },
+          ],
+          [
+            { rate: 30, // SUBmove
+              percent: 0,   translate: [0, 0], hue: 0,  saturate: 1  },
+            { percent: 20,  translate: [0.1, 0.05] },
+            { percent: 40,  translate: [0.15, -0.2] },
+            { percent: 60,  translate: [-0.1, -0.22],   hue: -16.41 },
+            { percent: 80,  translate: [-0.08, -0.22] },
+            { percent: 100, translate: [0, 0], hue: 0,  saturate: 1  },
+          ],
+        ],
+      },
+      'firefly-i': {
+        frames: butterflyFrames,
+        animations: [
+          [
+            { rate: 60, // move
+              percent: 0,   rotate: 0, translate: [0, 0],         scale: 0.4,     opacity: 40,  hue: 0,       saturate: 1 },
+            { percent: 45,  rotate: 0, translate: [-1.3, -0.4],   scale: 0.43 },
+            { percent: 55,  rotate: 0, translate: [-0.7, 1],      scale: 0.34 },
+            { percent: 70,  rotate: 0, translate: [0.2, 1.2],     scale: 0.37 },
+            { percent: 100, rotate: 0, translate: [0, 0],         scale: 0.4,     opacity: 40,  hue: 0,       saturate: 1 },
+          ],
+          [
+            { rate: 30, // SUBmove
+              percent: 0,   translate: [0, 0], hue: 0,  saturate: 1  },
+            { percent: 20,  translate: [-0.2, -0.1] },
+            { percent: 40,  translate: [0.1, 0.3] },
+            { percent: 60,  translate: [-0.4, -0.2] },
+            { percent: 80,  translate: [-0.13, -0.08],  hue: -16.41  },
+            { percent: 100, translate: [0, 0], hue: 0,  saturate: 1  },
           ],
         ],
       },
