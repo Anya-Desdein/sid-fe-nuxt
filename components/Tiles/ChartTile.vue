@@ -121,12 +121,15 @@ export default {
     const url = `/api/get-sensor-list/` + this.tileData.sensorIds.join(',');
     const data = await this.$axios.$get(url);
     if(!data || !data.sensors || !data.sensors.length) {
-      throw "Can't load sensor info for "+this.tileData.sensorId+"!";
+      throw "Can't load sensor info for "+this.tileData.sensorIds+"!";
     }
 
     const params = [];
-    if(this.tileData.startDate) params.push(`from=${this.tileData.startDate.toISOString()}`);
-    if(this.tileData.endDate) params.push(`to=${this.tileData.endDate.toISOString()}`);
+    let { startDate, endDate } = this.tileData;
+    if(this.tileData.startDateAgo) startDate = new Date(new Date().getTime() + this.tileData.startDateAgo); 
+    if(this.tileData.endDateAgo) endDate = new Date(new Date().getTime() + this.tileData.endDateAgo); 
+    if(startDate && !isNaN(+startDate)) params.push(`from=${startDate.toISOString()}`);
+    if(endDate && !isNaN(+endDate)) params.push(`to=${endDate.toISOString()}`);
     const histories = await Promise.all(sensorIds.map(sensorId => 
       this.$axios.$get(`/api/get-sensor-history/${sensorId}?${params.join('&')}`)
     ));

@@ -141,6 +141,7 @@ export default {
       try {
         this.controllerData = JSON.parse(entry.controllerData);
         if(typeof this.controllerData !== "object") throw "";
+        this.targetInputText = this.controllerData.target;
       }catch(e) {
         this.controllerData = null;
         console.log("Error while parsing device controllerData", e);

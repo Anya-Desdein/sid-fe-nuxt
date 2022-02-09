@@ -31,6 +31,24 @@
 import 'jsoneditor/dist/jsoneditor.min.css'
 import JSONEditor from 'jsoneditor';
 
+function parseDate(str) {
+  try {
+    if(!str) return { info: 'not set' };
+    const ago = parseFloat(str);
+    if(ago < -0.00001) {
+      return { dateAgo: ago * 60 * 60 * 1000, info: `${ago.toFixed(2).replace(/\.?0+$/,'')}h ago` };
+    }
+    const date = new Date(str);
+    if(isNaN(date.getTime())) {
+      throw 'Invalid date';
+    }
+    return { date, info: str };
+  }catch(e) {
+    console.log("Date parse error: ", e);
+    return { info: 'Invalid date' };
+  }
+}
+
 export default {
   data() {
     return {
@@ -40,19 +58,23 @@ export default {
   methods: {
     add(type) {
       const json = this.editor.get();
+      const fields = type === 'ChartTile' ? { startDate: '-2', endDate: '' } : {};
       json.push({
-        type, ids: [ "Set this field to correct ID" ]
+        type, ids: [ "Set this field to correct ID" ],
+        ...fields,
       });
       this.editor.set(json);
     },
     save() {
       const json = this.editor.get();
-      const tiles = json.map(({type, ids}) => {
+      const tiles = json.map(({type, ids, startDate: jsonStartDate, endDate: jsonEndDate}) => {
         const id = `${type}-${ids.join(',')}`
         switch(type) {
           case 'ChartTile':
           case 'ListingTile':
-            return { id, tileType: type, tileData: { sensorIds: ids } };
+            const { date: startDate, dateAgo: startDateAgo } = parseDate(jsonStartDate);
+            const { date: endDate, dateAgo: endDateAgo } = parseDate(jsonEndDate);
+            return { id, tileType: type, tileData: { sensorIds: ids, startDate, endDate, startDateAgo, endDateAgo } };
           case 'ControlTile':
             return { id, tileType: type, tileData: { deviceIds: ids } };
           default:
@@ -68,7 +90,10 @@ export default {
     this.editor = new JSONEditor(editor, {
       onNodeName({ size, value }) {
         if(value.type && typeof value.ids === "object") {
-          return `${value.type} - ${value.ids.length ? value.ids.join(", ") : 'NO IDS'}`;
+          const { info: startInfo } = parseDate(value.startDate);
+          const { info: endInfo } = parseDate(value.endDate);
+          const datePart = `Start: ${startInfo} End: ${endInfo}`;
+          return `${value.type} - ${value.ids.length ? value.ids.join(", ") : 'NO IDS'} ${datePart}`;
         }
         return size;
       }
@@ -86,7 +111,9 @@ export default {
       }
       return {
         type: entry.tileType,
-        ids
+        ids,
+        startDate: entry.tileData.startDateAgo ? String(entry.tileData.startDateAgo / 60 / 60 / 1000) : entry.tileData.startDate,
+        endDate: entry.tileData.endDateAgo ? String(entry.tileData.endDateAgo / 60 / 60 / 1000) : entry.tileData.startDate,
       };
     })
 
