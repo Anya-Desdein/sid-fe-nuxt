@@ -11,8 +11,8 @@
         W idealnych warunkach system powinien być umieszczony na dedykowanym urządzeniu np.: tablecie, na którym byłby zawsze uruchomiony i gotowy do wprowadzenia zmian. 
       </p>
       <p>
-        System został wyposażony w kontroler PID - użytkownik może zatem cieszyć się pełną automatyzacją regulacji urządzeń wyjściowych, np.: grzałki, gdy tylko nastąpi taka potrzeba.
-        Składa się on z arduino wyposażonego w czujniki ciepła i wilgotności, z grzałki obsługiwanej przez inteligentną wtyczkę, a także z aplikacji frontendowej (tu, gdzie to czytasz) i dwóch mniejszych aplikacji backendowych - daemona, api, oba z nich używają connctora, by komunikować się z bazą danych. 
+        System został wyposażony w kontroler PID-użytkownik może zatem cieszyć się pełną automatyzacją regulacji urządzeń wyjściowych, np.: grzałki, gdy tylko nastąpi taka potrzeba.
+        Składa się on z Arduino wyposażonego w czujniki ciepła i wilgotności, z grzałki obsługiwanej przez inteligentną wtyczkę, a także z aplikacji frontendowej (tu, gdzie to czytasz) i dwóch mniejszych aplikacji backendowych - daemona, api, oba z nich używają connectora, by komunikować się z bazą danych. 
       </p>
 
       <h3>Zasady użytkowania</h3>
@@ -20,7 +20,7 @@
         <li>System służy wyłącznie do użytku domowego, nie jest zaprojektowany do użytku w sieciach publicznych, czy w środowisku biznesowym - w przedsiębiorstwach.</li>
         <li>Dozwolona temperatura, jaką może osiągnąć pomieszczenie przy pomocy trybu Auto to między 0, a 40 stopni Celsjusza.</li>
         <li>Nie należy udostępniać hasła do sieci, które używa system, osobom trzecim.</li>
-        <li>Nie powinno się używać systemu na użądzeniu o szerokości ekranu mniejszej niż 450 px, zalecana wartość wynosi minimum 850 px.</li>
+        <li>Nie powinno się używać systemu na urządzeniu o szerokości ekranu mniejszej niż 450 px, zalecana wartość wynosi minimum 850 px.</li>
       </ul>
       <h3>Instalacja i konfiguracja systemu "Inteligentny Dom"</h3>
       <p>

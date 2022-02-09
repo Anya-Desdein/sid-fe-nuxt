@@ -6,7 +6,10 @@
         <h3>Jak skonfigurować stronę Home:</h3>
         <ul>
           <li>Możesz dodać maksymalnie 8 kafelków do strony głównej, kolejne będą pominięte.</li>
-          <li></li>
+          <li>Opcja "dodaj wykres" służy do dodawania wykresów. Aby skonfigurować wykres, podaj minimum jedną datę.
+             Wykres pokaże wtedy dane od podanej daty do teraźniejszości. Jeśli podasz dwie daty, wykres pokaże okres między punktami.</li>
+          <li>Opcja "dodaj listę" służy do dodania listy danych z czujników. Jeśli nie zostaną wskazane id wybranych czujników, wyświetlą się wszystkie dane. Możesz też wybrać, które dane chcesz pokazywać razem.</li>
+          <li>Opcja "dodaj przycisk" służy do dodania przycisku sterującego wybranym urządzeniem. Aby kontrolować urządzenie, należy podać jego id.</li>
           <li>Aby dodać element, wybierz jego nazwę u góry panelu. Skonfiguruj wymagane pola w edytorze poniżej. Przed opuszczeniem strony wybierz "Zapisz".</li>
         </ul>
       </div>

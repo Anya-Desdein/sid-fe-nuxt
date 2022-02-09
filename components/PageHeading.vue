@@ -41,6 +41,12 @@ export default {
       display: block;
     }
 }
+
+  a:hover > svg
+  {
+    fill: $color-hover;
+  }
+
 </style>
 
 <style lang="scss" scoped>
