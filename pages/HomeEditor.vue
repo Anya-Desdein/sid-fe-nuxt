@@ -1,6 +1,12 @@
 <template>
   <div>
-    <PageHeading title="Home Editor" noInfoBar></PageHeading>
+    <PageHeading title="Home Editor" noInfoBar>
+      <template v-slot:back-icon>
+        <NuxtLink to="/" class="back-icon" title="Back to Home">
+          <img src="~assets/img/back_icon.svg" alt="Back to Home">
+        </NuxtLink>
+      </template>
+    </PageHeading>
     <div class="container">
       <div class="config-description">
         <h3>Jak skonfigurować stronę Home:</h3>
