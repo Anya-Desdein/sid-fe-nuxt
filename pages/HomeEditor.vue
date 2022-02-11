@@ -175,9 +175,9 @@ $border: .0625rem;
   align-items: center;
   width: $label+ $border + $border;
   height: $text-normal + $text-normal;
-  transition: filter $transition;
-    &:hover {
-    filter: brightness(1.2) contrast(1.1);
+  transition: color $transition;
+  &:hover {
+    color: $color-hover;
   }
   
 }
@@ -200,6 +200,10 @@ $border: .0625rem;
 .config-save {
   color: $color-hover;
   border: $border solid $color-hover;
+  transition: filter $transition;
+  &:hover {
+    filter: brightness(1.2) contrast(1.1);
+  }
 }
 
 .config-save:after {
