@@ -42,6 +42,7 @@ img {
   margin-top: 0.2rem;
   margin-right: 1.625rem;
   display: block;
+  transition: filter $transition;
     &:hover {
     filter: brightness(1.2) contrast(1.1);
     
@@ -104,12 +105,13 @@ a:not(.icon) {
 
   transition: color $transition;
 
-  &, &:visited, &:hover, &:focus {
+  &, &:visited, &:focus {
     text-decoration: none;
     color: inherit;
   }
   
   &:hover {
+    text-decoration: none;
     color: $color-hover;
   }
 
