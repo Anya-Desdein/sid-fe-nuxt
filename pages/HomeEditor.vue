@@ -138,12 +138,20 @@ export default {
   text-shadow: none;
 }
 
+.back-icon{
+  transition: filter $transition;
+  &:hover {
+    filter: brightness(1.2) contrast(1.1);
+  }
+}
+
 .button-container {
   display: flex;
   margin-bottom: 0.4rem;
   text-align: center;
   justify-content: space-around;
   flex-wrap: wrap;
+  
 }
 
 
@@ -167,6 +175,10 @@ $border: .0625rem;
   align-items: center;
   width: $label+ $border + $border;
   height: $text-normal + $text-normal;
+  transition: filter $transition;
+    &:hover {
+    filter: brightness(1.2) contrast(1.1);
+  }
   
 }
 

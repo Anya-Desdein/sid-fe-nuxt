@@ -42,6 +42,10 @@ img {
   margin-top: 0.2rem;
   margin-right: 1.625rem;
   display: block;
+    &:hover {
+    filter: brightness(1.2) contrast(1.1);
+    
+  }
 }
 
 header .content {
@@ -115,6 +119,5 @@ a:not(.icon) {
     margin-left: 1rem;
   }
 }
-
 
 </style>

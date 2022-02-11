@@ -55,10 +55,18 @@ $border: .0625rem;
 }
 
 .button-on-off .off {
-   color: $color-text-inactive;
+    color: $color-text-inactive;
+    transition: color $transition;
+    &:hover {
+      color: $color-hover;
+   }
 }
 .button-on-off .on {
    color: $color-primary;
+    transition: color $transition;
+    &:hover {
+      color: $color-hover;
+   }
 }
 
 .button-on-off--on .on {

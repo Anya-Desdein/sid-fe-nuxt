@@ -160,7 +160,7 @@ export default {
     -webkit-user-select: none; 
     -moz-user-select: none;     
     -ms-user-select: none;  
-    user-select: none;  
+    user-select: none;
   }
 
   @include bp(max-square) {
@@ -181,6 +181,10 @@ export default {
     }
     svg {
       fill: #BEAC8F;
+      transition: filter $transition;
+      &:hover {
+        filter: brightness(1.2) contrast(1.1);
+  }
       transform: rotate(-90deg);
     }
   }
@@ -206,6 +210,10 @@ export default {
    
 
     input {
+      transition: color $transition;
+      &:hover {
+        color: $color-hover;
+      }
       color: #BEAC8F;
       font-family: 'Xanh Mono', monospace;
       background: transparent;
