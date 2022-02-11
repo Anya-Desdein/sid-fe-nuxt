@@ -64,10 +64,22 @@ export default {
   left:0;
   width:$text-huge;
   height:$text-huge;
-
   top:50%;
   transform: translateY(-50%);
 }
+
+@include bp(min-landscape) { 
+  .back-icon {
+    position: relative;
+    top: 0.8rem;
+      img {
+        height: 2.1rem * 0.85;
+        width: 2.1rem * 0.85;
+        float: left;
+      }
+    }
+  }
+
 
 .page-heading__content {
   > a {

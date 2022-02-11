@@ -220,7 +220,6 @@ $border: .0625rem;
   border-radius: 0.8rem;
   opacity: 0.5;
 }
-
 </style>
 
 <style lang="scss">
