@@ -1,6 +1,8 @@
 <template>
   <div>
-    <PageHeading>Ostatnia aktualizacja: 18:20</PageHeading>
+    <PageHeading>
+      <LastUpdated></LastUpdated>
+    </PageHeading>
     <GridPages :tiles="tiles" />
   </div>
 </template>

@@ -14,6 +14,7 @@
 <script>
 import Chart from 'chart.js/auto';
 import 'chartjs-adapter-luxon';
+import { mapMutations } from 'vuex'
 
 Chart.defaults.font.size = 14;
 Chart.defaults.color = '#BEAC8F';
@@ -112,7 +113,10 @@ export default {
         this.graph.data.datasets = this.graphData;
         this.graph.update('none');
       }
-    }
+    },
+    ...mapMutations({
+      updateLastUpdated: 'appStore/updateLastUpdated',
+    }),
   },
 
   async fetch() {
@@ -142,15 +146,22 @@ export default {
       this.heading = sensors[0].displayName;
     }
     
+    let latestDate = null;
     this.data = histories.map(({sensorId, data}) => {
       const sensor = sensorMap.get(sensorId);
 
       return {
         sensorName: sensor.displayName,
-        data: data.map(({value, readingDate}) => ({
-          x: new Date(readingDate),
-          y: value
-        }))
+        data: data.map(({value, readingDate}) => {
+          const x = new Date(readingDate);
+          if(latestDate === null || x > latestDate) {
+            latestDate = x;
+          }
+          return {
+            x,
+            y: value
+          };
+        })
       };
     })
 
@@ -165,6 +176,10 @@ export default {
 
 
     this.updateGraph();
+    
+    if(latestDate) {
+      this.updateLastUpdated(latestDate);
+    }
 
     setTimeout(() => this.$fetch(), 5000)
   }
