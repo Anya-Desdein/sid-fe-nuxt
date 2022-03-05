@@ -95,6 +95,7 @@ export default {
 <style lang="scss" scoped>
 
 .page-heading {
+
   display:flex;
   flex-direction: column-reverse;
 
