@@ -13,13 +13,13 @@
         <div class="page-heading__content">
           <slot />
           <template v-if="!noInfoBar && !noIcons">
-            <span>
+            <span @click.prevent="setCurrentBackgroundAnimation(2)">
               <img src="~assets/img/butterfly_icon.svg" alt="Butterfly Animation" title="Butterfly Animation">
             </span>
-            <span>
+            <span @click.prevent="setCurrentBackgroundAnimation(1)">
               <img src="~assets/img/firefly_icon.svg" alt="Firefly Animation" title="Firefly Animation">
             </span>
-            <span>
+            <span @click.prevent="setCurrentBackgroundAnimation(0)">
               <img src="~assets/img/null_icon.svg" alt="Disable Animation" title="Disable Animation">
             </span>
           </template>
@@ -30,12 +30,20 @@
 </template>
 
 <script>
+
+import { mapMutations } from 'vuex';
+
 export default {
   props: {
     title: String,
     noInfoBar: Boolean,
     noIcons: Boolean,
     topLine: Boolean,
+  },
+  methods: {
+    ...mapMutations({
+      setCurrentBackgroundAnimation: 'appStore/setCurrentBackgroundAnimation',
+    }),
   }
 }
 </script>

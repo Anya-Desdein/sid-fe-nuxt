@@ -20,7 +20,7 @@
         <li>System służy wyłącznie do użytku domowego, nie jest zaprojektowany do użytku w sieciach publicznych, czy w środowisku biznesowym - w przedsiębiorstwach.</li>
         <li>Dozwolona temperatura, jaką może osiągnąć pomieszczenie przy pomocy trybu Auto to między 0, a 40 stopni Celsjusza.</li>
         <li>Nie należy udostępniać hasła do sieci, które używa system, osobom trzecim.</li>
-        <li>Nie powinno się używać systemu na urządzeniu o szerokości ekranu mniejszej niż 450 px, zalecana wartość wynosi minimum 850 px.</li>
+        <li>Nie powinno się używać systemu na urządzeniu o szerokości ekranu mniejszej niż 450 px, zalecana wartość wynosi minimum 650 px.</li>
       </ul>
       <h3>Instalacja i konfiguracja systemu "Inteligentny Dom"</h3>
       <p>

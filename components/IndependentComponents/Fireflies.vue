@@ -18,6 +18,24 @@ class FireflyRenderer {
     this.currentFrame = 0;
     this.fps = 15;
     this.nextFrameTimeout = null;
+    this.images = {};
+  }
+
+  loadImage(path) {
+    let obj = this.images[path];
+    if(obj) {
+      return obj.value;
+    }
+    obj = {
+      value: null,
+    };
+    this.images[path] = obj;
+    const img = new Image();
+    img.onload = () => {
+      obj.value = img;
+    }
+    img.src = path;
+    return null;
   }
 
   destroy() {
@@ -60,7 +78,7 @@ class FireflyRenderer {
       ctx.fillStyle = 'green';
       for(let obj of frame) {
         ctx.setTransform(1, 0, 0, 1, 0, 0);
-        const { rotate, startPosX, startPosY, translate, scale, opacity, hue, saturate } = obj;
+        const { file, rotate, startPosX, startPosY, translate, scale, opacity, hue, saturate } = obj;
         const translateScale = 40;
         const size = scale * 8; 
         const cx = translate[0] * translateScale + size/2;
@@ -71,7 +89,15 @@ class FireflyRenderer {
         ctx.translate(cx, cy);
         ctx.rotate(rotate / 180 * Math.PI);
         ctx.translate(-cx, -cy);
-        ctx.fillRect(cx - size/2, cy - size/2, size, size);
+        let image = this.loadImage(file);
+
+        if(!image) {
+          // for debugging:
+          // ctx.fillText(file, cx, cy);
+        }else{
+          // ctx.fillRect(cx - size/2, cy - size/2, size, size);
+          ctx.drawImage(image, cx - size/2, cy - size/2, size, size);
+        }
       }
     } finally {
       const renderDuration = performance.now() - renderStart;
@@ -90,6 +116,7 @@ class FireflyAnimator {
     this.styleDefaults = { rotate: 0, startPosX: 0, startPosY: 0, translate: [0, 0], scale: 1, opacity: 100, hue: 0, saturate: 1 };
 
     const butterflyFrames = ['/img/firefly21.svg', '/img/firefly22.svg', '/img/firefly24.svg', '/img/firefly23.svg'];
+    const fireflyFrames = ['/img/firefly27_red.svg'];
     this.styles = Object.fromEntries(Object.entries({
 //butterflies
       'firefly-a': {
@@ -116,6 +143,30 @@ class FireflyAnimator {
       },
       'firefly-b': {
         frames: butterflyFrames,
+        animations: [
+          [
+            { rate: 60, // move
+              percent: 0,   rotate: 0,    translate: [0, 0],      scale: 2.5, opacity: 45,   hue: 0,       saturate: 1 },
+            { percent: 17,  rotate: -80,  translate: [-0.4, 0.6], scale: 2,   opacity: 55,   hue: 28.68,   saturate: 0.761 },
+            { percent: 33,  rotate: 60,   translate: [0,6, -1],   scale: 2.1, opacity: 45},
+            { percent: 62,  rotate: 40,   translate: [-0.3, -0.3],scale: 2.9, opacity: 5},
+            { percent: 100, rotate: 0,    translate: [0, 0],      scale: 2.5, opacity: 45,   hue: 0,       saturate: 1 },
+          ],
+          [
+            { rate: 30, // SUBmove
+              percent: 0,   translate: [0, 0] },
+            { percent: 13,  translate: [0.1, 0.3] },
+            { percent: 20,  translate: [-0.4, 0.2] },
+            { percent: 33,  translate: [-0.2, 0.7] },
+            { percent: 49,  translate: [-0.4, 0.2] },
+            { percent: 59,  translate: [-0.4, -0.7] },
+            { percent: 74,  translate: [0.3, -0.2] },
+            { percent: 100, translate: [0, 0] },
+          ],
+        ],
+      },
+      'firefly-fireflies': {
+        frames: fireflyFrames,
         animations: [
           [
             { rate: 60, // move
@@ -321,21 +372,21 @@ class FireflyAnimator {
             });
             return ret;
           });
-          console.log(k, styles)
           styles.pop();
           return styles;
         }),
       }];
     }));
     
-    console.log(JSON.parse(JSON.stringify(this.styles)));
   }
 
-  calculateStyle(type, frame, progress) {
+  calculateStyle(type, frame, progress, time) {
     // console.log("calculate style",type, frame, progress);
     const { frames, animations } = this.styles[type];
+    const imageFps = 4;
+    const frameIndex = Math.floor(time * imageFps); 
     const ret = {
-      file: frames[frame % frames.length],
+      file: frames[frameIndex % frames.length],
       ...this.styleDefaults, translate: [0, 0]
     };
 
@@ -412,7 +463,7 @@ class FireflyAnimator {
           objects[elementIdx].finished = true;
           continue;
         }
-        const style = this.calculateStyle(type, currentFrame, progress);
+        const style = this.calculateStyle(type, currentFrame, progress, time);
         if(!objects[elementIdx]) {
           objects[elementIdx] = { 
             finished: false, 
@@ -424,7 +475,7 @@ class FireflyAnimator {
         style.startPosY = objects[elementIdx].startPos[1];
         objects[elementIdx].frames.push(style);
         added = true;
-        if(i === 5) {
+        if(i === 100) {
           console.log((progress*100).toFixed(1), time, duration)
         }
       }
@@ -473,7 +524,7 @@ class FireflyAnimator {
       }
     });
 
-    return async () => {
+    const ret = async function () {
       let val = frames.shift();
       while(!val) {
         await new Promise(r => setTimeout(r, 1)); // todo: clean up using promises 
@@ -484,7 +535,16 @@ class FireflyAnimator {
       }
       return val;
     };
-  }
+
+    ret.reset = () => {
+      frames.splice(0, frames.length);
+      data.currentFrame = 0;
+      data.finished = false;
+      data.objects.splice(0, data.objects.length);
+    };
+
+    return ret;
+  } 
 }
 
 
@@ -493,22 +553,41 @@ export default {
     return {
       renderer: null,
       windowResizeHandler: this.resizeCanvas.bind(this),
+      frameGeneratorUpdater: null,
     };
+  },
+  watch: {
+    currentBackgroundAnimation (newAnimation) {
+      console.log(`Changing animation: ${newAnimation}`);
+      if(newAnimation === 1) {
+        this.animator.setPreset([
+            [60, 'firefly-fireflies'],
+        ])
+      }else if(newAnimation === 2) {
+        this.animator.setPreset([
+            [30, 'firefly-a'], 
+            [30, 'firefly-b'], 
+        ])
+      }else{
+        this.animator.setPreset([])
+      }
+      this.frameGeneratorUpdater();
+    }
   },
   async mounted() {
     this.resizeCanvas();
-
     window.addEventListener('resize', this.windowResizeHandler);
 
     this.animator = new FireflyAnimator();
     this.animator.setPreset([
-        // [10, 'firefly-test'], 
         [40, 'firefly-a'], 
         [15, 'firefly-b'], 
     ])
 
-    const fps = 30;
+    const fps = 20;
     const frameGenerator = this.animator.frameGenerator(fps);
+    this.frameGeneratorUpdater = frameGenerator.reset;
+    this.frameGeneratorUpdater();
 
     const canvas = this.$refs.firefliesCanvas;
 
@@ -544,6 +623,11 @@ export default {
       const canvas = this.$refs.firefliesCanvas;
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+    }
+  },
+  computed: {
+    currentBackgroundAnimation() {
+      return this.$store.state.appStore.currentBackgroundAnimation;
     }
   },
   beforeDestroy() {
