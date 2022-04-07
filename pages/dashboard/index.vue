@@ -11,21 +11,8 @@
 export default {
   data() {
     return {
-      tiles: [
-        {
-          id: 3,
-          tileType: 'ChartTile',
-          tileData: {
-            sensorIds: ['14905677-3', '14905677-4'],
-            startDate: new Date('2022-01-13T10:00:00'),
-            endDate: new Date('2022-01-20T10:00:00'),
-            preferredPointCount: 15,
-          }
-        },
-      ]
+      tiles: []
     };
-  },
-  methods: {
   },
   async fetch() {
     let data = await this.$axios.$get(`/api/get-sensor-list`);
@@ -36,8 +23,10 @@ export default {
     if(!data || !data.devices) throw "Can't load device list!";
     const { devices } = data;
 
+    const asd = { a: 5, b: 10 };
+    const asd2 = { a: 15, C: 10 };
+    console.log({ ...asd, ...asd2, qwe: 123 })
     
-
     this.tiles = [
       ...sensors.map(sensor => {
         return {
@@ -45,7 +34,7 @@ export default {
           tileType: 'ChartTile',
           tileData: { 
             sensorIds: [ sensor.id ],
-            startDate: new Date(new Date() - 1000 * 60 * 60 * 1 * 1),
+            startDate: new Date(new Date() - 1000 * 60 * 60 * 5 * 1),
             endDate: new Date(new Date() + 1000 * 60),
             preferredPointCount: 5, 
           }
@@ -61,7 +50,8 @@ export default {
           }
         }
       }),
-            ...devices.map(device => {
+      
+      ...devices.map(device => {
         return {
           id: 'control-' + device.id,
           tileType: 'ControlTile',
