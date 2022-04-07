@@ -1,7 +1,7 @@
 
 <template>
   <div class="control-tile">
-    <TileHeading :title="deviceInfo.displayName || '...'">{{ deviceInfo.displayName || '...' }}</TileHeading>
+    <TileHeading :title="deviceInfo.displayName || '...'">{{ tileData.title || deviceInfo.displayName || '...' }}</TileHeading>
     <div class="tile-content">
       <button-on-off labelTrue='Auto' labelFalse='Manual' :state="autoEnabled" @click="toggleAuto"></button-on-off>
       <button-on-off 
@@ -63,12 +63,15 @@ export default {
     targetInputChanged() {
       const parsed = parseFloat(this.targetInputText);
       if(!isNaN(parsed)) {
+        if(!this.controllerData) {
+          this.controllerData = {};
+        }
         this.controllerData.target = parsed;
       }
       this.updateControllerDataTarget(0); // run for checks
     },
     async updateControllerDataTarget(diff) {
-      if(typeof this.controllerData.target !== "number") {
+      if(typeof this.controllerData?.target !== "number") {
         return;
       }
       this.controllerData.target += diff;
@@ -143,7 +146,7 @@ export default {
       try {
         this.controllerData = JSON.parse(entry.controllerData);
         if(typeof this.controllerData !== "object") throw "";
-        this.targetInputText = this.controllerData.target;
+        this.targetInputText = this.controllerData?.target || '';
       }catch(e) {
         this.controllerData = null;
         console.log("Error while parsing device controllerData", e);

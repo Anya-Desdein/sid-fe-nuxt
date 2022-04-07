@@ -32,6 +32,7 @@ export default {
       data: [],
       graphData: [],
       graph: null,
+      destroyed: false,
       styles: [
         {
           backgroundColor: '#FF487A',
@@ -50,6 +51,14 @@ export default {
       ]
       
     };
+  },
+
+  beforeDestroy() {
+    this.destroyed = true;
+    if(this.graph) {
+      this.graph.destroy();
+      this.graph = null;
+    }
   },
 
   methods: {
@@ -103,11 +112,12 @@ export default {
           }
         };
         setTimeout(() => {
+          if(this.destroyed) return;
           this.graph = new Chart(
             this.$refs.graphCanvas,
             config
           );
-        }, 1000);
+        }, 500);
       }else{
         // graph exista
         this.graph.data.datasets = this.graphData;
@@ -129,7 +139,7 @@ export default {
     }
 
     const params = [];
-    let { startDate, endDate } = this.tileData;
+    let { startDate, endDate, title } = this.tileData;
     if(this.tileData.startDateAgo) startDate = new Date(new Date().getTime() + this.tileData.startDateAgo); 
     if(this.tileData.endDateAgo) endDate = new Date(new Date().getTime() + this.tileData.endDateAgo); 
     if(startDate && !isNaN(+startDate)) params.push(`from=${startDate.toISOString()}`);
@@ -142,8 +152,20 @@ export default {
     const sensorMap = new Map();
     sensors.forEach(sensor => sensorMap.set(sensor.id, sensor));
 
-    if(sensors.length === 1) {
-      this.heading = sensors[0].displayName;
+    this.heading = "No sensors";
+    if(data.sensors.length) {
+      this.heading = `${sensors.length} sensors`;
+
+      if(sensors.length === 1) {
+        const name = sensors[0].displayName;
+        if(name) {
+          this.heading = name;
+        }
+      }
+      
+      if(this.tileData.title) {
+        this.heading = this.tileData.title;
+      }
     }
     
     let latestDate = null;

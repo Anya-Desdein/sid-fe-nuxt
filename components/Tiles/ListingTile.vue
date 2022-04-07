@@ -28,7 +28,18 @@ export default {
 
     this.heading = "No sensors";
     if(data.sensors.length) {
-      this.heading = data.sensors[0].displayName;
+      this.heading = `${data.sensors.length} sensors`;
+
+      if(data.sensors.length === 1) {
+        const name = data.sensors[0].displayName;
+        if(name) {
+          this.heading = name;
+        }
+      }
+
+      if(this.tileData.title) {
+        this.heading = this.tileData.title;
+      }
     }
     this.sensors = data.sensors;
 

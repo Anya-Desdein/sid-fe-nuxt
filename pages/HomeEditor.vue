@@ -73,14 +73,14 @@ export default {
     },
     save() {
       const json = this.editor.get();
-      const tiles = json.map(({type, ids, startDate: jsonStartDate, endDate: jsonEndDate}) => {
-        const id = `${type}-${ids.join(',')}`
+      const tiles = json.map(({type, ids, startDate: jsonStartDate, endDate: jsonEndDate, title}) => {
+        const id = `${type}-${ids.join(',')}-${jsonStartDate}-${jsonEndDate}`;
         switch(type) {
           case 'ChartTile':
           case 'ListingTile':
             const { date: startDate, dateAgo: startDateAgo } = parseDate(jsonStartDate);
             const { date: endDate, dateAgo: endDateAgo } = parseDate(jsonEndDate);
-            return { id, tileType: type, tileData: { sensorIds: ids, startDate, endDate, startDateAgo, endDateAgo } };
+            return { id, tileType: type, tileData: { sensorIds: ids, startDate, endDate, startDateAgo, endDateAgo, title } };
           case 'ControlTile':
             return { id, tileType: type, tileData: { deviceIds: ids } };
           default:
@@ -120,6 +120,7 @@ export default {
         ids,
         startDate: entry.tileData.startDateAgo ? String(entry.tileData.startDateAgo / 60 / 60 / 1000) : entry.tileData.startDate,
         endDate: entry.tileData.endDateAgo ? String(entry.tileData.endDateAgo / 60 / 60 / 1000) : entry.tileData.startDate,
+        title: entry.tileData.title || null,
       };
     })
 
